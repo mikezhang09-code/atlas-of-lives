@@ -110,7 +110,7 @@ function addReliefTiles() {
     source: "relief-global",
     paint: {
       "raster-fade-duration": 0,
-      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 1.8, .95, 6.8, .52, 8.5, 0]
+      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 1.8, .95, 6.8, .46, 10, .28, 12, .2]
     }
   });
   map.addLayer({
@@ -119,7 +119,7 @@ function addReliefTiles() {
     source: "relief-cn",
     paint: {
       "raster-fade-duration": 0,
-      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 3.8, 0, 4.6, .92, 7.2, .48, 8.5, 0]
+      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 3.8, 0, 4.6, .92, 7.2, .58, 9.5, .36, 12, .24]
     }
   });
 }
@@ -195,7 +195,10 @@ function addMask(outline) {
     id: "mask",
     type: "fill",
     source: "mask",
-    paint: { "fill-color": "#ece1c6", "fill-opacity": 0.5 }
+    paint: {
+      "fill-color": "#ece1c6",
+      "fill-opacity": ["interpolate", ["linear"], ["zoom"], 2.4, .42, 4, .22, 5.2, .06, 6, 0]
+    }
   }, "prov-line");
 }
 

@@ -74,7 +74,7 @@ npm run bake:relief
 脚本会下载 AWS Open Data 的 Terrarium DEM 瓦片到 `.cache/terrarium/`，输出 `tiles/relief/{z}/{x}/{y}.webp`。当前采用混合瓦片策略：
 
 - 全球低 zoom：`z0-z3`
-- 中国细节：`z4-z6`
+- 东亚区域细节：`z4-z6`
 
 MapLibre 会按当前视野懒加载可见瓦片。全球层在高 zoom 会 overzoom 低级瓦片，中国范围则叠加更细的局部 relief。
 

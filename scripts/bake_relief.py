@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bake georeferenced China relief raster tiles from public Terrarium DEM tiles."""
+"""Bake georeferenced relief raster tiles from public Terrarium DEM tiles."""
 
 from __future__ import annotations
 
@@ -17,14 +17,12 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "tiles" / "relief"
 CACHE = ROOT / ".cache" / "terrarium"
 NATURAL_EARTH_CACHE = ROOT / ".cache" / "natural-earth" / "ne_110m_land.geojson"
-CHINA_GEOJSON = ROOT / "geo" / "100000_full.json"
-
 MAX_MERCATOR_LAT = 85.0511287798066
 GLOBAL_ZOOMS = range(0, 4)
-CHINA_ZOOMS = range(4, 7)
+REGIONAL_ZOOMS = range(4, 7)
 TILE_SIZE = 256
 GLOBAL_BOUNDS = (-180.0, MAX_MERCATOR_LAT, 180.0, -MAX_MERCATOR_LAT)
-CHINA_BOUNDS = (67.5, 55.77657301866769, 140.625, 16.636191878397664)
+REGIONAL_BOUNDS = (67.5, 55.77657301866769, 140.625, 16.636191878397664)
 TERRARIUM_URL = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
 NATURAL_EARTH_LAND_URL = (
     "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/"
@@ -125,21 +123,11 @@ def hillshade(elevation: np.ndarray) -> np.ndarray:
     return shaded
 
 
-def load_mask_geojson(kind: str) -> dict:
-    if kind == "global":
-        return fetch_natural_earth_land()
-    if kind == "china":
-        return json.loads(CHINA_GEOJSON.read_text())
-    raise ValueError(f"Unknown mask kind: {kind}")
-
-
-def draw_land_mask(width: int, height: int, zoom: int, x0: int, y0: int, kind: str) -> Image.Image:
+def draw_land_mask(width: int, height: int, zoom: int, x0: int, y0: int) -> Image.Image:
     mask = Image.new("L", (width, height), 0)
     draw = ImageDraw.Draw(mask)
-    data = load_mask_geojson(kind)
+    data = fetch_natural_earth_land()
     for feature in data["features"]:
-        if kind == "china" and feature.get("properties", {}).get("adcode") == "100000_JD":
-            continue
         geometry = feature.get("geometry") or {}
         polygons = geometry.get("coordinates", [])
         if geometry.get("type") == "Polygon":
@@ -177,8 +165,7 @@ def tile_range(zoom: int, bounds: tuple[float, float, float, float]) -> tuple[in
 
 def render_zoom(
     zoom: int,
-    bounds: tuple[float, float, float, float],
-    mask_kind: str
+    bounds: tuple[float, float, float, float]
 ) -> tuple[Image.Image, int, int, int, int]:
     x0, x1, y0, y1 = tile_range(zoom, bounds)
     width = (x1 - x0) * TILE_SIZE
@@ -193,7 +180,7 @@ def render_zoom(
             py = (y - y0) * TILE_SIZE
             elevation[py : py + TILE_SIZE, px : px + TILE_SIZE] = elev
 
-    land_mask = np.asarray(draw_land_mask(width, height, zoom, x0, y0, mask_kind)).astype(np.float32) / 255.0
+    land_mask = np.asarray(draw_land_mask(width, height, zoom, x0, y0)).astype(np.float32) / 255.0
     shade = hillshade(elevation)
     land = colorize(elevation)
     land = land * (0.72 + shade[:, :, None] * 0.38)
@@ -223,12 +210,12 @@ def write_tiles(image: Image.Image, zoom: int, x0: int, x1: int, y0: int, y1: in
 def main() -> None:
     total = 0
     jobs = [
-        ("global", GLOBAL_ZOOMS, GLOBAL_BOUNDS, "global"),
-        ("china", CHINA_ZOOMS, CHINA_BOUNDS, "china"),
+        ("global", GLOBAL_ZOOMS, GLOBAL_BOUNDS),
+        ("regional", REGIONAL_ZOOMS, REGIONAL_BOUNDS),
     ]
-    for label, zooms, bounds, mask_kind in jobs:
+    for label, zooms, bounds in jobs:
         for zoom in zooms:
-            image, x0, x1, y0, y1 = render_zoom(zoom, bounds, mask_kind)
+            image, x0, x1, y0, y1 = render_zoom(zoom, bounds)
             count = write_tiles(image, zoom, x0, x1, y0, y1)
             total += count
             print(f"Wrote {label} z{zoom} tiles x{x0}-{x1 - 1}, y{y0}-{y1 - 1} ({count} tiles)")
