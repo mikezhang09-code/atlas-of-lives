@@ -60,6 +60,7 @@ button {
   z-index: 3;
   pointer-events: none;
   mix-blend-mode: soft-light;
+  opacity: .42;
 }
 
 .titlebar {

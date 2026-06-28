@@ -484,33 +484,35 @@ function drawMist() {
   const canvas = document.getElementById("mist");
   const context = canvas.getContext("2d");
   const ratio = Math.min(2, window.devicePixelRatio || 1);
+  const clouds = [
+    { x: .18, y: .18, w: 260, h: 58, r: -.08, a: .095 },
+    { x: .72, y: .25, w: 300, h: 64, r: .06, a: .075 },
+    { x: .44, y: .72, w: 340, h: 70, r: -.04, a: .06 }
+  ];
   const resize = () => {
     canvas.width = Math.floor(window.innerWidth * ratio);
     canvas.height = Math.floor(window.innerHeight * ratio);
     canvas.style.width = `${window.innerWidth}px`;
     canvas.style.height = `${window.innerHeight}px`;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    render();
   };
-  resize();
-  window.addEventListener("resize", resize);
-  let frame = 0;
   const render = () => {
-    frame += .003;
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    for (let i = 0; i < 7; i += 1) {
-      const x = ((i * 260 + frame * 9000) % (window.innerWidth + 360)) - 180;
-      const y = 110 + i * 78 + Math.sin(frame * 4 + i) * 18;
-      const gradient = context.createRadialGradient(x, y, 20, x, y, 170);
-      gradient.addColorStop(0, "rgba(255,250,235,.18)");
+    clouds.forEach((cloud) => {
+      const x = window.innerWidth * cloud.x;
+      const y = window.innerHeight * cloud.y;
+      const gradient = context.createRadialGradient(x, y, 18, x, y, cloud.w * .62);
+      gradient.addColorStop(0, `rgba(255,250,235,${cloud.a})`);
       gradient.addColorStop(1, "rgba(255,250,235,0)");
       context.fillStyle = gradient;
       context.beginPath();
-      context.ellipse(x, y, 210, 52, -.12, 0, Math.PI * 2);
+      context.ellipse(x, y, cloud.w, cloud.h, cloud.r, 0, Math.PI * 2);
       context.fill();
-    }
-    requestAnimationFrame(render);
+    });
   };
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) render();
+  resize();
+  window.addEventListener("resize", resize);
 }
 
 map.on("load", async () => {
