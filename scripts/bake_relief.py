@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import math
+import time
 import urllib.request
 from pathlib import Path
 
@@ -15,12 +16,20 @@ from PIL import Image, ImageDraw, ImageFilter
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "tiles" / "relief"
 CACHE = ROOT / ".cache" / "terrarium"
+NATURAL_EARTH_CACHE = ROOT / ".cache" / "natural-earth" / "ne_110m_land.geojson"
 CHINA_GEOJSON = ROOT / "geo" / "100000_full.json"
 
-ZOOMS = range(2, 7)
+MAX_MERCATOR_LAT = 85.0511287798066
+GLOBAL_ZOOMS = range(0, 4)
+CHINA_ZOOMS = range(4, 7)
 TILE_SIZE = 256
-WEST, NORTH, EAST, SOUTH = 67.5, 55.77657301866769, 140.625, 16.636191878397664
+GLOBAL_BOUNDS = (-180.0, MAX_MERCATOR_LAT, 180.0, -MAX_MERCATOR_LAT)
+CHINA_BOUNDS = (67.5, 55.77657301866769, 140.625, 16.636191878397664)
 TERRARIUM_URL = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
+NATURAL_EARTH_LAND_URL = (
+    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/"
+    "geojson/ne_110m_land.geojson"
+)
 
 PAPER = np.array([236, 226, 200], dtype=np.float32)
 SEA = np.array([196, 211, 207], dtype=np.float32)
@@ -31,6 +40,7 @@ def lon_to_tile_x(lon: float, zoom: int) -> float:
 
 
 def lat_to_tile_y(lat: float, zoom: int) -> float:
+    lat = min(MAX_MERCATOR_LAT, max(-MAX_MERCATOR_LAT, lat))
     lat_rad = math.radians(lat)
     return (1.0 - math.asinh(math.tan(lat_rad)) / math.pi) / 2.0 * (2**zoom)
 
@@ -52,9 +62,24 @@ def fetch_tile(z: int, x: int, y: int) -> Image.Image:
     if not path.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
         url = TERRARIUM_URL.format(z=z, x=x, y=y)
-        with urllib.request.urlopen(url, timeout=30) as response:
-            path.write_bytes(response.read())
+        for attempt in range(4):
+            try:
+                with urllib.request.urlopen(url, timeout=30) as response:
+                    path.write_bytes(response.read())
+                break
+            except Exception:
+                if attempt == 3:
+                    raise
+                time.sleep(1.5 * (attempt + 1))
     return Image.open(path).convert("RGB")
+
+
+def fetch_natural_earth_land() -> dict:
+    if not NATURAL_EARTH_CACHE.exists():
+        NATURAL_EARTH_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        with urllib.request.urlopen(NATURAL_EARTH_LAND_URL, timeout=60) as response:
+            NATURAL_EARTH_CACHE.write_bytes(response.read())
+    return json.loads(NATURAL_EARTH_CACHE.read_text())
 
 
 def decode_terrarium(image: Image.Image) -> np.ndarray:
@@ -100,12 +125,20 @@ def hillshade(elevation: np.ndarray) -> np.ndarray:
     return shaded
 
 
-def draw_land_mask(width: int, height: int, zoom: int, x0: int, y0: int) -> Image.Image:
+def load_mask_geojson(kind: str) -> dict:
+    if kind == "global":
+        return fetch_natural_earth_land()
+    if kind == "china":
+        return json.loads(CHINA_GEOJSON.read_text())
+    raise ValueError(f"Unknown mask kind: {kind}")
+
+
+def draw_land_mask(width: int, height: int, zoom: int, x0: int, y0: int, kind: str) -> Image.Image:
     mask = Image.new("L", (width, height), 0)
     draw = ImageDraw.Draw(mask)
-    data = json.loads(CHINA_GEOJSON.read_text())
+    data = load_mask_geojson(kind)
     for feature in data["features"]:
-        if feature.get("properties", {}).get("adcode") == "100000_JD":
+        if kind == "china" and feature.get("properties", {}).get("adcode") == "100000_JD":
             continue
         geometry = feature.get("geometry") or {}
         polygons = geometry.get("coordinates", [])
@@ -128,16 +161,26 @@ def add_paper_texture(rgb: np.ndarray) -> np.ndarray:
     return np.clip(rgb + grain[:, :, None] * 1.3, 0, 255)
 
 
-def tile_range(zoom: int) -> tuple[int, int, int, int]:
-    x0 = math.floor(lon_to_tile_x(WEST, zoom))
-    x1 = math.ceil(lon_to_tile_x(EAST, zoom))
-    y0 = math.floor(lat_to_tile_y(NORTH, zoom))
-    y1 = math.ceil(lat_to_tile_y(SOUTH, zoom))
+def tile_range(zoom: int, bounds: tuple[float, float, float, float]) -> tuple[int, int, int, int]:
+    west, north, east, south = bounds
+    x0 = math.floor(lon_to_tile_x(west, zoom))
+    x1 = math.ceil(lon_to_tile_x(east, zoom))
+    y0 = math.floor(lat_to_tile_y(north, zoom))
+    y1 = math.ceil(lat_to_tile_y(south, zoom))
+    limit = 2**zoom
+    x0 = max(0, min(limit, x0))
+    x1 = max(0, min(limit, x1))
+    y0 = max(0, min(limit, y0))
+    y1 = max(0, min(limit, y1))
     return x0, x1, y0, y1
 
 
-def render_zoom(zoom: int) -> tuple[Image.Image, int, int, int, int]:
-    x0, x1, y0, y1 = tile_range(zoom)
+def render_zoom(
+    zoom: int,
+    bounds: tuple[float, float, float, float],
+    mask_kind: str
+) -> tuple[Image.Image, int, int, int, int]:
+    x0, x1, y0, y1 = tile_range(zoom, bounds)
     width = (x1 - x0) * TILE_SIZE
     height = (y1 - y0) * TILE_SIZE
 
@@ -150,7 +193,7 @@ def render_zoom(zoom: int) -> tuple[Image.Image, int, int, int, int]:
             py = (y - y0) * TILE_SIZE
             elevation[py : py + TILE_SIZE, px : px + TILE_SIZE] = elev
 
-    land_mask = np.asarray(draw_land_mask(width, height, zoom, x0, y0)).astype(np.float32) / 255.0
+    land_mask = np.asarray(draw_land_mask(width, height, zoom, x0, y0, mask_kind)).astype(np.float32) / 255.0
     shade = hillshade(elevation)
     land = colorize(elevation)
     land = land * (0.72 + shade[:, :, None] * 0.38)
@@ -179,11 +222,16 @@ def write_tiles(image: Image.Image, zoom: int, x0: int, x1: int, y0: int, y1: in
 
 def main() -> None:
     total = 0
-    for zoom in ZOOMS:
-        image, x0, x1, y0, y1 = render_zoom(zoom)
-        count = write_tiles(image, zoom, x0, x1, y0, y1)
-        total += count
-        print(f"Wrote z{zoom} tiles x{x0}-{x1 - 1}, y{y0}-{y1 - 1} ({count} tiles)")
+    jobs = [
+        ("global", GLOBAL_ZOOMS, GLOBAL_BOUNDS, "global"),
+        ("china", CHINA_ZOOMS, CHINA_BOUNDS, "china"),
+    ]
+    for label, zooms, bounds, mask_kind in jobs:
+        for zoom in zooms:
+            image, x0, x1, y0, y1 = render_zoom(zoom, bounds, mask_kind)
+            count = write_tiles(image, zoom, x0, x1, y0, y1)
+            total += count
+            print(f"Wrote {label} z{zoom} tiles x{x0}-{x1 - 1}, y{y0}-{y1 - 1} ({count} tiles)")
     print(f"Wrote {total} relief tiles to {OUT_DIR}")
 
 

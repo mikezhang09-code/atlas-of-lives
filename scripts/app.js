@@ -1,6 +1,6 @@
 const CHINA_BOUNDS = [[97, 20.5], [123, 45]];
 const HOME_PADDING = { top: 96, bottom: 96, left: 42, right: 42 };
-const RELIEF_TILE_BOUNDS = [67.5, 16.63619, 140.625, 55.77657];
+const CHINA_RELIEF_TILE_BOUNDS = [67.5, 16.63619, 140.625, 55.77657];
 const RELIEF_TILES = "tiles/relief/{z}/{x}/{y}.webp";
 const DEM_TILES = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
 const DEM_BOUNDS = [73, 17, 135, 54];
@@ -58,13 +58,29 @@ async function getJson(url) {
 }
 
 function addReliefTiles() {
+  map.addSource("relief-global", {
+    type: "raster",
+    tiles: [RELIEF_TILES],
+    tileSize: 256,
+    minzoom: 0,
+    maxzoom: 3
+  });
   map.addSource("relief-cn", {
     type: "raster",
     tiles: [RELIEF_TILES],
     tileSize: 256,
-    minzoom: 2,
+    minzoom: 4,
     maxzoom: 6,
-    bounds: RELIEF_TILE_BOUNDS
+    bounds: CHINA_RELIEF_TILE_BOUNDS
+  });
+  map.addLayer({
+    id: "relief-global-img",
+    type: "raster",
+    source: "relief-global",
+    paint: {
+      "raster-fade-duration": 0,
+      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 1.8, .95, 6.8, .52, 8.5, 0]
+    }
   });
   map.addLayer({
     id: "relief-cn-img",
@@ -72,7 +88,7 @@ function addReliefTiles() {
     source: "relief-cn",
     paint: {
       "raster-fade-duration": 0,
-      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 2.4, .95, 5.2, .9, 7.2, .42, 8.5, 0]
+      "raster-opacity": ["interpolate", ["linear"], ["zoom"], 3.8, 0, 4.6, .92, 7.2, .48, 8.5, 0]
     }
   });
 }
@@ -84,7 +100,7 @@ function addChinaLayers(china) {
     type: "fill",
     source: "china",
     paint: { "fill-color": "#aebd8a", "fill-opacity": 1 }
-  }, "relief-cn-img");
+  }, "relief-global-img");
   map.addLayer({
     id: "prov-fill",
     type: "fill",

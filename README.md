@@ -56,7 +56,7 @@ npm run deploy:prod
 ## 图层结构
 
 - MapLibre GL JS 负责地图渲染和交互
-- `tiles/relief/{z}/{x}/{y}.webp` 是用公开 Terrarium DEM 瓦片烘焙的中国地形 raster tiles
+- `tiles/relief/{z}/{x}/{y}.webp` 是用公开 Terrarium DEM 瓦片烘焙的 relief raster tiles
 - `geo/100000_full.json` 和 `geo/china-outline.json` 提供真实中国边界
 - `geo/ne_50m_rivers_cn.json`、`geo/ne_50m_lakes_cn.json` 提供水系
 - DOM Marker 负责竖牌地点标注
@@ -68,9 +68,15 @@ npm run deploy:prod
 npm run bake:relief
 ```
 
-脚本会下载 AWS Open Data 的 Terrarium DEM 瓦片到 `.cache/terrarium/`，输出 `tiles/relief/{z}/{x}/{y}.webp`。当前中国范围预烘焙 `z2-z6`，MapLibre 会按当前视野懒加载可见瓦片。
+脚本会下载 AWS Open Data 的 Terrarium DEM 瓦片到 `.cache/terrarium/`，输出 `tiles/relief/{z}/{x}/{y}.webp`。当前采用混合瓦片策略：
+
+- 全球低 zoom：`z0-z3`
+- 中国细节：`z4-z6`
+
+MapLibre 会按当前视野懒加载可见瓦片。全球层在高 zoom 会 overzoom 低级瓦片，中国范围则叠加更细的局部 relief。
 
 数据来源：
 
 - AWS Open Data Terrain Tiles: https://registry.opendata.aws/terrain-tiles/
+- Natural Earth land polygons: https://www.naturalearthdata.com/
 - Mapzen Terrarium format: https://www.mapzen.com/blog/terrain-tile-service/
