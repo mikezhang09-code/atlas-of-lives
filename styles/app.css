@@ -415,16 +415,19 @@ button {
 }
 
 .journey-marker {
-  position: relative;
-  width: 1px;
-  height: 1px;
+  position: absolute;
+  width: 58px;
+  height: 118px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   cursor: pointer;
 }
 
 .journey-marker .flag {
   position: absolute;
-  left: 0;
-  bottom: 14px;
+  left: 50%;
+  bottom: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -459,8 +462,8 @@ button {
 
 .journey-marker .pole {
   position: absolute;
-  left: 0;
-  bottom: 0;
+  left: 50%;
+  bottom: 6px;
   width: 2px;
   height: 18px;
   margin-left: -1px;
@@ -469,15 +472,15 @@ button {
 
 .journey-marker .dot {
   position: absolute;
-  left: 0;
-  bottom: 0;
+  left: 50%;
+  bottom: -6px;
   width: 12px;
   height: 12px;
   border: 2px solid rgba(255, 250, 235, .92);
   border-radius: 50%;
   background: #c84826;
   box-shadow: 0 1px 5px rgba(69, 48, 20, .4);
-  transform: translate(-50%, 50%);
+  transform: translateX(-50%);
 }
 
 .journey-marker:hover .flag,
