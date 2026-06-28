@@ -10,9 +10,6 @@ let poems = {};
 let activeJourney = null;
 let activeIndex = 0;
 let currentFilter = "all";
-let globeOn = true;
-let terrainOn = false;
-let tourTimer = 0;
 
 const map = new maplibregl.Map({
   container: "map",
@@ -40,7 +37,7 @@ map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-
 function fitHome(duration = 700) {
   map.fitBounds(CHINA_BOUNDS, {
     padding: HOME_PADDING,
-    pitch: globeOn ? 0 : 36,
+    pitch: 0,
     bearing: 0,
     duration
   });
@@ -304,7 +301,6 @@ function renderTimeline() {
 
 function updateFilter(filter) {
   currentFilter = filter;
-  stopTour();
   document.querySelectorAll(".filter").forEach((button) => {
     button.classList.toggle("on", button.dataset.filter === filter);
   });
@@ -340,7 +336,7 @@ function selectPoint(index, fly) {
     map.flyTo({
       center: point.lnglat,
       zoom: Math.max(map.getZoom(), 5.7),
-      pitch: globeOn ? 0 : 46,
+      pitch: 0,
       bearing: 0,
       duration: 1500,
       curve: 1.42,
@@ -397,33 +393,6 @@ function selectAdjacent(direction) {
   selectPoint(next, true);
 }
 
-function stopTour() {
-  window.clearTimeout(tourTimer);
-  tourTimer = 0;
-  document.getElementById("tourBtn").classList.remove("on");
-}
-
-function startTour() {
-  stopTour();
-  document.getElementById("tourBtn").classList.add("on");
-  const sequence = visibleIndices();
-  if (!sequence.length) return;
-  let cursor = Math.max(0, sequence.indexOf(activeIndex));
-  const step = () => {
-    selectPoint(sequence[cursor], true);
-    cursor += 1;
-    if (cursor >= sequence.length) {
-      tourTimer = window.setTimeout(() => {
-        stopTour();
-        fitHome(1400);
-      }, 2100);
-      return;
-    }
-    tourTimer = window.setTimeout(step, 2600);
-  };
-  step();
-}
-
 function searchableText(point) {
   const poem = poemForPoint(point);
   const poemText = poem ? [poem.title, poem.author, ...poem.body] : [];
@@ -469,7 +438,6 @@ function renderSearchResults(query) {
 function setJourney(journeyId, flyHome = true) {
   const nextJourney = journeys[journeyId];
   if (!nextJourney || activeJourney?.id === journeyId) return;
-  stopTour();
   if (!document.getElementById("poemModal").hidden) closePoemModal();
   activeJourney = nextJourney;
   points = nextJourney.points;
@@ -491,26 +459,6 @@ function setJourney(journeyId, flyHome = true) {
 }
 
 function wireControls() {
-  document.getElementById("homeBtn").addEventListener("click", () => {
-    stopTour();
-    fitHome();
-  });
-  document.getElementById("tourBtn").addEventListener("click", () => {
-    if (tourTimer) stopTour();
-    else startTour();
-  });
-  document.getElementById("projectionBtn").addEventListener("click", () => {
-    globeOn = !globeOn;
-    map.setProjection({ type: globeOn ? "globe" : "mercator" });
-    map.setPaintProperty("bg", "background-color", globeOn ? "#c3d3cf" : "#ece2c8");
-    document.getElementById("projectionBtn").classList.toggle("on", globeOn);
-    fitHome(700);
-  });
-  document.getElementById("terrainBtn").addEventListener("click", () => {
-    terrainOn = !terrainOn;
-    document.getElementById("terrainBtn").classList.toggle("on", terrainOn);
-    map.setTerrain(terrainOn ? { source: "dem", exaggeration: 3.2 } : null);
-  });
   document.getElementById("prevBtn").addEventListener("click", () => selectAdjacent(-1));
   document.getElementById("nextBtn").addEventListener("click", () => selectAdjacent(1));
   document.getElementById("poemOpen").addEventListener("click", openPoemModal);
