@@ -596,7 +596,7 @@ button {
   border: 1px solid rgba(156, 47, 27, .28);
   border-radius: 14px;
   background:
-    linear-gradient(180deg, rgba(255, 250, 238, .97), rgba(241, 228, 199, .96)),
+    linear-gradient(180deg, #fffaf0, #f1e4c7),
     var(--paper-strong);
   box-shadow: 0 24px 70px rgba(38, 25, 10, .42);
 }
@@ -604,22 +604,27 @@ button {
 .poem-sheet::before,
 .poem-sheet::after {
   position: absolute;
-  top: 18px;
-  width: 42px;
+  top: 20px;
+  width: 58px;
   height: 1px;
-  background: rgba(156, 47, 27, .36);
+  background: linear-gradient(90deg, rgba(156, 47, 27, .48), rgba(156, 47, 27, .12));
   content: "";
 }
 
-.poem-sheet::before { left: 24px; }
-.poem-sheet::after { right: 24px; }
+.poem-sheet::before { left: 28px; }
+.poem-sheet::after {
+  right: 82px;
+  width: 42px;
+  transform: scaleX(-1);
+  transform-origin: center;
+}
 
 .poem-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
+  top: 13px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
   border: 1px solid rgba(156, 47, 27, .22);
   border-radius: 50%;
   background: rgba(255, 250, 238, .75);
