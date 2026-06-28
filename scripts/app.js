@@ -1,6 +1,6 @@
 const CHINA_BOUNDS = [[97, 20.5], [123, 45]];
 const HOME_PADDING = { top: 96, bottom: 96, left: 42, right: 42 };
-const DEM_TILES = "https://agentsfeed.org/app-demo/gaokao/tiles/terrarium/{z}/{x}/{y}.webp";
+const DEM_TILES = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
 const DEM_BOUNDS = [73, 17, 135, 54];
 
 const TYPE_LABEL = {
@@ -228,21 +228,8 @@ function makeRoute() {
   };
 }
 
-function makeActiveSegment(index) {
-  const start = Math.max(0, index - 1);
-  return {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "LineString",
-      coordinates: points.slice(start, index + 1).map((point) => point.lnglat)
-    }
-  };
-}
-
 function addJourneyLayers() {
   map.addSource("journey-route", { type: "geojson", data: makeRoute() });
-  map.addSource("journey-active-segment", { type: "geojson", data: makeActiveSegment(0) });
   map.addLayer({
     id: "journey-route",
     type: "line",
@@ -253,18 +240,6 @@ function addJourneyLayers() {
       "line-opacity": ["interpolate", ["linear"], ["zoom"], 3, .38, 6, .18],
       "line-width": ["interpolate", ["linear"], ["zoom"], 3, .9, 7, 2],
       "line-dasharray": [2, 2]
-    }
-  });
-  map.addLayer({
-    id: "journey-active-segment",
-    type: "line",
-    source: "journey-active-segment",
-    layout: { "line-cap": "round", "line-join": "round" },
-    paint: {
-      "line-color": "#6f1f12",
-      "line-opacity": .72,
-      "line-width": ["interpolate", ["linear"], ["zoom"], 3, 1.8, 7, 3.6],
-      "line-blur": .25
     }
   });
 
@@ -329,8 +304,6 @@ function selectPoint(index, fly) {
   document.querySelectorAll(".timeline li").forEach((item) => {
     item.classList.toggle("on", Number(item.dataset.index) === activeIndex);
   });
-  const activeSegmentSource = map.getSource("journey-active-segment");
-  if (activeSegmentSource) activeSegmentSource.setData(makeActiveSegment(activeIndex));
   if (fly) {
     map.flyTo({
       center: point.lnglat,
