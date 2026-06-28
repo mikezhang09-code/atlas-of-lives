@@ -72,7 +72,7 @@ async function getJson(url) {
 function addReliefImage() {
   map.addSource("relief-cn", {
     type: "image",
-    url: "assets/relief-cn2.webp",
+    url: "assets/china-relief-baked.webp",
     coordinates: [[67.5, 55.77657], [140.625, 55.77657], [140.625, 16.63619], [67.5, 16.63619]]
   });
   map.addLayer({

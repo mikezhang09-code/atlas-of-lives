@@ -52,8 +52,21 @@ npm run deploy:prod
 ## 图层结构
 
 - MapLibre GL JS 负责地图渲染和交互
-- `assets/relief-cn2.webp` 是经纬度配准的国风中国地形底图
+- `assets/china-relief-baked.webp` 是用公开 Terrarium DEM 瓦片烘焙的经纬度配准中国地形底图
 - `geo/100000_full.json` 和 `geo/china-outline.json` 提供真实中国边界
 - `geo/ne_50m_rivers_cn.json`、`geo/ne_50m_lakes_cn.json` 提供水系
 - DOM Marker 负责竖牌地点标注
 - GeoJSON LineString 负责生平路线和当前进度路线
+
+## 烘焙 relief 图
+
+```bash
+python3 scripts/bake_relief.py
+```
+
+脚本会下载 AWS Open Data 的 Terrarium DEM 瓦片到 `.cache/terrarium/`，输出 `assets/china-relief-baked.webp`。
+
+数据来源：
+
+- AWS Open Data Terrain Tiles: https://registry.opendata.aws/terrain-tiles/
+- Mapzen Terrarium format: https://www.mapzen.com/blog/terrain-tile-service/
