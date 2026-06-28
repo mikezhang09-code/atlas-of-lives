@@ -54,6 +54,7 @@
       <p id="storyText">点击地图上的竖牌，查看地点、诗句与生平事件；也可以点“巡”按时间飞行。</p>
       <div id="storyWorks" class="works"></div>
       <blockquote id="storyQuote">竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。</blockquote>
+      <button id="poemOpen" class="poem-open" type="button">阅读全文</button>
       <div class="progress">
         <span id="progressText">第 1 / 11 站</span>
         <i><b id="progressBar"></b></i>
@@ -65,6 +66,16 @@
     </aside>
 
     <ol id="timeline" class="timeline" aria-label="诗人生平时间线"></ol>
+
+    <section id="poemModal" class="poem-modal" aria-labelledby="poemTitle" aria-modal="true" role="dialog" hidden>
+      <button id="poemBackdrop" class="poem-backdrop" type="button" aria-label="关闭诗词全文"></button>
+      <article class="poem-sheet">
+        <button id="poemClose" class="poem-close" type="button" aria-label="关闭">×</button>
+        <p id="poemAuthor" class="poem-author"></p>
+        <h2 id="poemTitle"></h2>
+        <div id="poemBody" class="poem-body"></div>
+      </article>
+    </section>
 
     <div id="loader" class="loader">
       <div>

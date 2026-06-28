@@ -6,6 +6,7 @@ const DEM_BOUNDS = [73, 17, 135, 54];
 let points = [];
 let markers = [];
 let journeys = {};
+let poems = {};
 let activeJourney = null;
 let activeIndex = 0;
 let currentFilter = "all";
@@ -322,11 +323,13 @@ function updateFilter(filter) {
 function selectPoint(index, fly) {
   activeIndex = (index + points.length) % points.length;
   const point = points[activeIndex];
+  const poem = poemForPoint(point);
   document.getElementById("storyYears").textContent = point.years;
   document.getElementById("storyTitle").textContent = `${point.name} · ${typeLabel(point.type)}`;
   document.getElementById("storyText").textContent = point.summary;
   document.getElementById("storyWorks").innerHTML = point.works.map((work) => `<span>${work}</span>`).join("");
   document.getElementById("storyQuote").textContent = point.quote;
+  document.getElementById("poemOpen").hidden = !poem;
   document.getElementById("progressText").textContent = `第 ${activeIndex + 1} / ${points.length} 站`;
   document.getElementById("progressBar").style.transform = `scaleX(${(activeIndex + 1) / points.length})`;
   markers.forEach((marker, i) => marker.el.classList.toggle("active", i === activeIndex));
@@ -344,6 +347,37 @@ function selectPoint(index, fly) {
       essential: true
     });
   }
+}
+
+function poemForPoint(point) {
+  const title = point.poem || point.works.find((work) => poems[work]);
+  if (!title || !poems[title]) return null;
+  return { title, ...poems[title] };
+}
+
+function openPoemModal() {
+  const point = points[activeIndex];
+  const poem = poemForPoint(point);
+  if (!poem) return;
+  const modal = document.getElementById("poemModal");
+  const body = document.getElementById("poemBody");
+  document.getElementById("poemAuthor").textContent = `${poem.author} · ${point.name}`;
+  document.getElementById("poemTitle").textContent = poem.title;
+  body.replaceChildren();
+  poem.body.forEach((line) => {
+    const p = document.createElement("p");
+    p.textContent = line;
+    body.appendChild(p);
+  });
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  document.getElementById("poemClose").focus();
+}
+
+function closePoemModal() {
+  document.getElementById("poemModal").hidden = true;
+  document.body.classList.remove("modal-open");
+  document.getElementById("poemOpen").focus();
 }
 
 function visibleIndices() {
@@ -391,7 +425,9 @@ function startTour() {
 }
 
 function searchableText(point) {
-  return [point.name, point.short, point.years, typeLabel(point.type), point.summary, point.quote, ...point.works]
+  const poem = poemForPoint(point);
+  const poemText = poem ? [poem.title, poem.author, ...poem.body] : [];
+  return [point.name, point.short, point.years, typeLabel(point.type), point.summary, point.quote, ...point.works, ...poemText]
     .join(" ")
     .toLowerCase();
 }
@@ -434,6 +470,7 @@ function setJourney(journeyId, flyHome = true) {
   const nextJourney = journeys[journeyId];
   if (!nextJourney || activeJourney?.id === journeyId) return;
   stopTour();
+  if (!document.getElementById("poemModal").hidden) closePoemModal();
   activeJourney = nextJourney;
   points = nextJourney.points;
   activeIndex = 0;
@@ -476,6 +513,9 @@ function wireControls() {
   });
   document.getElementById("prevBtn").addEventListener("click", () => selectAdjacent(-1));
   document.getElementById("nextBtn").addEventListener("click", () => selectAdjacent(1));
+  document.getElementById("poemOpen").addEventListener("click", openPoemModal);
+  document.getElementById("poemClose").addEventListener("click", closePoemModal);
+  document.getElementById("poemBackdrop").addEventListener("click", closePoemModal);
   document.getElementById("searchInput").addEventListener("input", (event) => {
     renderSearchResults(event.target.value);
   });
@@ -492,6 +532,9 @@ function wireControls() {
   document.addEventListener("click", (event) => {
     const search = document.querySelector(".search");
     if (!search.contains(event.target)) document.getElementById("searchResults").hidden = true;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !document.getElementById("poemModal").hidden) closePoemModal();
   });
   document.querySelectorAll(".person-tab").forEach((button) => {
     button.addEventListener("click", () => setJourney(button.dataset.journey));
@@ -543,7 +586,7 @@ function drawMist() {
 map.on("load", async () => {
   try {
     addReliefImage();
-    const [china, outline, rivers, lakes, journey] = await Promise.all([
+    const [china, outline, rivers, lakes, journey, poemData] = await Promise.all([
       getJson("geo/100000_full.json"),
       getJson("geo/china-outline.json"),
       getJson("geo/ne_50m_rivers_cn.json"),
@@ -551,8 +594,10 @@ map.on("load", async () => {
       Promise.all([
         getJson("data/sushi-journey.json"),
         getJson("data/libai-journey.json")
-      ])
+      ]),
+      getJson("data/poems.json")
     ]);
+    poems = poemData;
     journeys = Object.fromEntries(journey.map((item) => [item.id, item]));
     activeJourney = journeys.sushi;
     points = activeJourney.points;

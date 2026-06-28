@@ -99,7 +99,8 @@ button {
 
 .toolbar button,
 .filter,
-.story-actions button {
+.story-actions button,
+.poem-open {
   border: 1px solid var(--gold-soft);
   background: linear-gradient(180deg, rgba(252, 246, 230, .94), rgba(238, 224, 193, .9));
   box-shadow: 0 3px 10px rgba(69, 48, 20, .18);
@@ -116,7 +117,8 @@ button {
 
 .toolbar button:hover,
 .filter:hover,
-.story-actions button:hover {
+.story-actions button:hover,
+.poem-open:hover {
   transform: translateY(-1px);
   border-color: var(--gold);
 }
@@ -344,12 +346,29 @@ button {
 }
 
 .story blockquote {
-  margin: 12px 0 14px;
+  margin: 12px 0 10px;
   padding: 10px 12px;
   border-left: 3px solid var(--zhu);
   background: rgba(156, 47, 27, .07);
   color: #6b351f;
   font: 700 15px/1.7 "Kaiti SC", "STKaiti", "KaiTi", serif;
+}
+
+.poem-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  margin: 0 0 13px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: #7d3a24;
+  font: 700 12px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 1px;
+}
+
+.poem-open[hidden] {
+  display: none;
 }
 
 .progress {
@@ -543,6 +562,108 @@ button {
   pointer-events: none;
 }
 
+.poem-modal[hidden] {
+  display: none;
+}
+
+.poem-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 18;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.poem-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background:
+    radial-gradient(ellipse at center, rgba(42, 31, 17, .12), rgba(42, 31, 17, .48)),
+    rgba(236, 226, 200, .34);
+  cursor: pointer;
+  backdrop-filter: blur(3px);
+}
+
+.poem-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(620px, calc(100vw - 40px));
+  max-height: min(760px, calc(100vh - 56px));
+  overflow: auto;
+  padding: 30px 34px 34px;
+  border: 1px solid rgba(156, 47, 27, .28);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 238, .97), rgba(241, 228, 199, .96)),
+    var(--paper-strong);
+  box-shadow: 0 24px 70px rgba(38, 25, 10, .42);
+}
+
+.poem-sheet::before,
+.poem-sheet::after {
+  position: absolute;
+  top: 18px;
+  width: 42px;
+  height: 1px;
+  background: rgba(156, 47, 27, .36);
+  content: "";
+}
+
+.poem-sheet::before { left: 24px; }
+.poem-sheet::after { right: 24px; }
+
+.poem-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(156, 47, 27, .22);
+  border-radius: 50%;
+  background: rgba(255, 250, 238, .75);
+  color: #7d3a24;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.poem-close:hover {
+  border-color: var(--zhu);
+  background: rgba(156, 47, 27, .08);
+}
+
+.poem-author {
+  margin: 0 0 8px;
+  color: var(--zhu);
+  text-align: center;
+  font: 700 13px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 3px;
+}
+
+.poem-sheet h2 {
+  margin: 0 42px 18px;
+  text-align: center;
+  font: 700 28px/1.2 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 4px;
+}
+
+.poem-body {
+  display: grid;
+  gap: 7px;
+  padding: 16px 0 0;
+  border-top: 1px dashed rgba(189, 154, 85, .48);
+}
+
+.poem-body p {
+  margin: 0;
+  color: #57391d;
+  text-align: center;
+  font: 700 18px/1.9 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 1px;
+}
+
 .loader {
   position: absolute;
   inset: 0;
@@ -636,6 +757,17 @@ button {
   }
   .story blockquote {
     margin: 9px 0 11px;
+  }
+  .poem-sheet {
+    padding: 26px 20px 28px;
+  }
+  .poem-sheet h2 {
+    margin-inline: 36px;
+    font-size: 24px;
+  }
+  .poem-body p {
+    font-size: 16px;
+    line-height: 1.85;
   }
 }
 
