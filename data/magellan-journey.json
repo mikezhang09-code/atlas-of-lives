@@ -10,6 +10,7 @@
   "route": false,
   "bounds": [[-130, -56], [152, 42]],
   "types": {
+    "birth": { "label": "出生", "color": "#5b5347" },
     "origin": { "label": "启航", "color": "#296c67" },
     "voyage": { "label": "远航", "color": "#8f5d14" },
     "strait": { "label": "海峡", "color": "#6f4d86" },
@@ -17,6 +18,18 @@
     "final": { "label": "终局", "color": "#7d3424" }
   },
   "points": [
+    {
+      "id": "sabrosa",
+      "name": "萨布罗萨",
+      "short": "出生",
+      "years": "1480",
+      "type": "birth",
+      "lnglat": [-7.57, 41.26],
+      "summary": "麦哲伦约 1480 年生于葡萄牙北部的萨布罗萨贵族之家。少年入宫为侍从，早年随葡萄牙舰队远征印度与马六甲，在东方的季风里练就了一身航海的本领与雄心。",
+      "quote": "少年时，他便在印度洋的季风里，学会了如何驾驭大海。",
+      "works": ["生于葡萄牙", "早年远征东方"],
+      "importance": 4
+    },
     {
       "id": "sanlucar",
       "name": "桑卢卡尔",
