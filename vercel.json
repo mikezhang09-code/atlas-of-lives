@@ -3,7 +3,7 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(assets|geo|vendor)/(.*)",
+      "source": "/(assets|geo|lib)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
