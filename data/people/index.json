@@ -24,6 +24,46 @@
       "era": "蒙古帝国",
       "region": "欧亚",
       "path": "data/genghis-journey.json"
+    },
+    {
+      "id": "dufu",
+      "label": "少陵",
+      "name": "杜甫",
+      "era": "盛唐",
+      "region": "中国",
+      "path": "data/dufu-journey.json"
+    },
+    {
+      "id": "xuxiake",
+      "label": "霞客",
+      "name": "徐霞客",
+      "era": "晚明",
+      "region": "中国",
+      "path": "data/xuxiake-journey.json"
+    },
+    {
+      "id": "xuanzang",
+      "label": "玄奘",
+      "name": "陈祎",
+      "era": "盛唐",
+      "region": "欧亚",
+      "path": "data/xuanzang-journey.json"
+    },
+    {
+      "id": "xinqiji",
+      "label": "幼安",
+      "name": "辛弃疾",
+      "era": "南宋",
+      "region": "中国",
+      "path": "data/xinqiji-journey.json"
+    },
+    {
+      "id": "liqingzhao",
+      "label": "易安",
+      "name": "李清照",
+      "era": "两宋之交",
+      "region": "中国",
+      "path": "data/liqingzhao-journey.json"
     }
   ]
 }
