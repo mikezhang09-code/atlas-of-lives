@@ -88,6 +88,22 @@
       "era": "伊丽莎白时代",
       "region": "欧洲",
       "path": "data/shakespeare-journey.json"
+    },
+    {
+      "id": "alexander",
+      "label": "亚历山大",
+      "name": "亚历山大大帝",
+      "era": "马其顿王国",
+      "region": "欧亚",
+      "path": "data/alexander-journey.json"
+    },
+    {
+      "id": "dante",
+      "label": "但丁",
+      "name": "但丁",
+      "era": "中世纪意大利",
+      "region": "欧洲",
+      "path": "data/dante-journey.json"
     }
   ]
 }

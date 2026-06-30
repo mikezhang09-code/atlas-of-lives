@@ -737,5 +737,44 @@
       "我们短暂的一生，前后都环绕在睡眠之中。",
       "啊，美丽的新世界，竟有这样的人物！"
     ]
+  },
+  "神曲·地狱篇·开篇": {
+    "author": "但丁",
+    "body": [
+      "Nel mezzo del cammin di nostra vita",
+      "mi ritrovai per una selva oscura,",
+      "ché la diritta via era smarrita.",
+      "在我们人生旅途的中途，",
+      "我发现自己置身于一座幽暗的森林，",
+      "因为那正直的道路已经迷失。"
+    ]
+  },
+  "神曲·天堂篇·放逐预言": {
+    "author": "但丁",
+    "body": [
+      "Tu lascerai ogne cosa diletta",
+      "più caramente; e questo è quello strale",
+      "che l'arco de lo essilio pria saetta.",
+      "Tu proverai sì come sa di sale",
+      "lo pane altrui, e come è duro calle",
+      "lo scendere e 'l salir per l'altrui scale.",
+      "你将离开一切你最珍爱的事物——",
+      "这正是放逐之弓，",
+      "最先射出的那一支箭。",
+      "你将尝到，别人的面包",
+      "多么咸涩；上下别人的楼梯，",
+      "是多么艰难的路。"
+    ]
+  },
+  "神曲·三篇终章·群星": {
+    "author": "但丁",
+    "body": [
+      "...e quindi uscimmo a riveder le stelle. （《地狱篇》终）",
+      "...puro e disposto a salire a le stelle. （《炼狱篇》终）",
+      "...l'amor che move il sole e l'altre stelle. （《天堂篇》终）",
+      "……于是我们走出此地，重见那满天繁星。（地狱篇 终）",
+      "……纯净了，准备好飞升向那群星。（炼狱篇 终）",
+      "……是爱，推动着太阳和群星。（天堂篇 终）"
+    ]
   }
 }
