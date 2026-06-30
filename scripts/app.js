@@ -396,9 +396,52 @@ function openPoemModal() {
     p.textContent = line;
     body.appendChild(p);
   });
+  renderPoemGloss(poem);
   modal.hidden = false;
   document.body.classList.add("modal-open");
   document.getElementById("poemClose").focus();
+}
+
+// 诗词「释义」：背景 + 现代文译文，默认收起，有内容才显示按钮
+function renderPoemGloss(poem) {
+  const toggle = document.getElementById("poemGlossToggle");
+  const gloss = document.getElementById("poemGloss");
+  const bg = document.getElementById("poemBg");
+  const trans = document.getElementById("poemTrans");
+  bg.replaceChildren();
+  trans.replaceChildren();
+  const hasGloss = !!(poem.bg || (poem.trans && poem.trans.length));
+  toggle.hidden = !hasGloss;
+  gloss.hidden = true;
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.textContent = "释义 · 背景与译文 ▾";
+  if (!hasGloss) return;
+  if (poem.bg) {
+    const h = document.createElement("h3");
+    h.textContent = "背景";
+    const p = document.createElement("p");
+    p.textContent = poem.bg;
+    bg.append(h, p);
+  }
+  if (poem.trans && poem.trans.length) {
+    const h = document.createElement("h3");
+    h.textContent = "译文";
+    trans.append(h);
+    poem.trans.forEach((line) => {
+      const p = document.createElement("p");
+      p.textContent = line;
+      trans.append(p);
+    });
+  }
+}
+
+function togglePoemGloss() {
+  const gloss = document.getElementById("poemGloss");
+  const toggle = document.getElementById("poemGlossToggle");
+  const show = gloss.hidden;
+  gloss.hidden = !show;
+  toggle.setAttribute("aria-expanded", String(show));
+  toggle.textContent = show ? "收起释义 ▴" : "释义 · 背景与译文 ▾";
 }
 
 function closePoemModal() {
@@ -586,6 +629,7 @@ function wireControls() {
   document.getElementById("nextBtn").addEventListener("click", () => selectAdjacent(1));
   document.getElementById("poemOpen").addEventListener("click", openPoemModal);
   document.getElementById("poemClose").addEventListener("click", closePoemModal);
+  document.getElementById("poemGlossToggle").addEventListener("click", togglePoemGloss);
   document.getElementById("poemBackdrop").addEventListener("click", closePoemModal);
   document.getElementById("searchInput").addEventListener("input", (event) => {
     renderSearchResults(event.target.value);
@@ -623,11 +667,19 @@ function wireControls() {
       selectAdjacent(1);
     }
   });
-  // 诗词弹窗内简易焦点陷阱：Tab 始终停在关闭按钮，焦点不跑出弹窗
+  // 诗词弹窗焦点陷阱：Tab 在弹窗内可见按钮间循环，不跑出弹窗
   document.getElementById("poemModal").addEventListener("keydown", (event) => {
-    if (event.key === "Tab") {
+    if (event.key !== "Tab") return;
+    const focusables = [...document.getElementById("poemModal").querySelectorAll("button:not([hidden])")];
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();
-      document.getElementById("poemClose").focus();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
     }
   });
   document.getElementById("personTrigger").addEventListener("click", togglePersonPanel);

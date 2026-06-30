@@ -711,6 +711,55 @@ button {
   letter-spacing: 1px;
 }
 
+.poem-gloss-toggle {
+  display: block;
+  margin: 18px auto 0;
+  padding: 7px 20px;
+  border: 1px solid rgba(156, 47, 27, .3);
+  border-radius: 999px;
+  background: rgba(255, 250, 238, .7);
+  color: #7d3a24;
+  font: 600 13px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.poem-gloss-toggle:hover {
+  border-color: var(--zhu);
+  background: rgba(156, 47, 27, .08);
+}
+
+.poem-gloss[hidden] { display: none; }
+
+.poem-gloss {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(189, 154, 85, .48);
+  text-align: left;
+}
+
+.poem-gloss h3 {
+  margin: 0 0 8px;
+  color: var(--zhu);
+  font: 700 13px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 3px;
+}
+
+.poem-gloss h3::before { content: "◦ "; }
+
+.poem-gloss-bg p {
+  margin: 0 0 18px;
+  color: #6b5430;
+  font: 400 14.5px/1.85 "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.poem-gloss-trans p {
+  margin: 0 0 5px;
+  color: #4f3a1f;
+  font: 400 14.5px/1.9 "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
 .loader {
   position: absolute;
   inset: 0;
