@@ -3,7 +3,7 @@ const HOME_PADDING = { top: 96, bottom: 96, left: 42, right: 42 };
 const REGIONAL_RELIEF_TILE_BOUNDS = [56.25, 16.63619, 140.625, 55.77657];
 const RELIEF_VERSION = "20260630-world";
 const RELIEF_TILES = `tiles/relief/{z}/{x}/{y}.webp?v=${RELIEF_VERSION}`;
-const DEM_TILES = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
+const DEM_TILES = "https://elevation-tiles-prod.s3.dualstack.us-east-1.amazonaws.com/terrarium/{z}/{x}/{y}.png";
 
 let points = [];
 let markers = [];
@@ -87,6 +87,31 @@ async function getJson(url) {
   return response.json();
 }
 
+// 深链接：从 URL ?p=<人物id>&i=<第几站> 读取初始状态
+function initialState() {
+  const params = new URLSearchParams(location.search);
+  const id = params.get("p") || "";
+  const i = parseInt(params.get("i"), 10);
+  return {
+    id: peopleCatalog.some((person) => person.id === id) ? id : "",
+    index: Number.isFinite(i) ? i - 1 : 0
+  };
+}
+
+function clampIndex(index) {
+  if (!points.length) return 0;
+  return Math.min(Math.max(0, index || 0), points.length - 1);
+}
+
+// 切换人物/节点时把状态写回 URL，便于分享「直接打开某人的某一站」
+function updateUrl() {
+  if (!activeJourney) return;
+  const params = new URLSearchParams();
+  params.set("p", activeJourney.id);
+  params.set("i", String(activeIndex + 1));
+  history.replaceState(null, "", `?${params.toString()}`);
+}
+
 function addReliefTiles() {
   map.addSource("relief-global", {
     type: "raster",
@@ -144,7 +169,7 @@ function addChinaProvinces(china) {
       "fill-color": "#e8d2a8",
       "fill-opacity": 0.14
     }
-  });
+  }, "journey-route");
 
   // 省名标注只对中国有意义；查看其他地区时它们随地图移出视野，互不干扰
   china.features.forEach((feature) => {
@@ -172,14 +197,14 @@ function addBorders(countries) {
     type: "line",
     source: "world-countries",
     paint: { "line-color": "#7c5b31", "line-width": 1.1, "line-opacity": 0.5 }
-  });
+  }, "journey-route");
   // 中国省界（叠在国界之上，给中国人物更细的脉络）
   map.addLayer({
     id: "prov-line",
     type: "line",
     source: "china",
     paint: { "line-color": "#a98e5f", "line-width": 0.75, "line-opacity": 0.66 }
-  });
+  }, "journey-route");
 }
 
 function addWater(rivers, lakes) {
@@ -191,7 +216,7 @@ function addWater(rivers, lakes) {
     type: "fill",
     source: "lakes",
     paint: { "fill-color": "#8cb8bf", "fill-opacity": 0.78 }
-  });
+  }, "journey-route");
   map.addLayer({
     id: "rivers-under",
     type: "line",
@@ -202,7 +227,7 @@ function addWater(rivers, lakes) {
       "line-opacity": 0.42,
       "line-width": ["interpolate", ["linear"], ["zoom"], 3, 1.6, 7, 4.4]
     }
-  });
+  }, "journey-route");
   map.addLayer({
     id: "rivers",
     type: "line",
@@ -213,7 +238,7 @@ function addWater(rivers, lakes) {
       "line-opacity": 0.95,
       "line-width": ["interpolate", ["linear"], ["zoom"], 3, .75, 7, 2.1]
     }
-  });
+  }, "journey-route");
 }
 
 function addTerrainSources() {
@@ -225,8 +250,7 @@ function addTerrainSources() {
     tileSize: 256,
     maxzoom: 8
   };
-  map.addSource("dem", dem);
-  map.addSource("dem-hs", { ...dem });
+  map.addSource("dem-hs", dem);
   map.addLayer({
     id: "hillshade",
     type: "hillshade",
@@ -238,7 +262,7 @@ function addTerrainSources() {
       "hillshade-accent-color": "#8a6a3f",
       "hillshade-exaggeration": 0.18
     }
-  });
+  }, "journey-route");
 }
 
 function makeRoute() {
@@ -338,6 +362,7 @@ function selectPoint(index, fly) {
   document.querySelectorAll(".timeline li").forEach((item) => {
     item.classList.toggle("on", Number(item.dataset.index) === activeIndex);
   });
+  updateUrl();
   if (fly) {
     map.flyTo({
       center: point.lnglat,
@@ -581,9 +606,29 @@ function wireControls() {
     if (!document.getElementById("personSelect").contains(event.target)) closePersonPanel();
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    if (!document.getElementById("poemModal").hidden) closePoemModal();
-    closePersonPanel();
+    if (event.key === "Escape") {
+      if (!document.getElementById("poemModal").hidden) closePoemModal();
+      closePersonPanel();
+      return;
+    }
+    // 方向键切换前后节点（输入框聚焦或弹窗打开时不拦截）
+    const tag = (event.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea") return;
+    if (!document.getElementById("poemModal").hidden) return;
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      selectAdjacent(-1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      selectAdjacent(1);
+    }
+  });
+  // 诗词弹窗内简易焦点陷阱：Tab 始终停在关闭按钮，焦点不跑出弹窗
+  document.getElementById("poemModal").addEventListener("keydown", (event) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      document.getElementById("poemClose").focus();
+    }
   });
   document.getElementById("personTrigger").addEventListener("click", togglePersonPanel);
   map.on("zoom", () => {
@@ -633,27 +678,21 @@ function drawMist() {
 map.on("load", async () => {
   try {
     addReliefTiles();
-    const [land, countries, china, rivers, lakes, peopleIndex, poemData] = await Promise.all([
+    // 关键资源：底图陆地 + 人物索引 + 诗词，先行加载并渲染首屏
+    const [land, peopleIndex, poemData] = await Promise.all([
       getJson("geo/world-land.json"),
-      getJson("geo/world-countries.json"),
-      getJson("geo/100000_full.json"),
-      getJson("geo/world-rivers.json"),
-      getJson("geo/world-lakes.json"),
       getJson("data/people/index.json"),
       getJson("data/poems.json")
     ]);
     poems = poemData;
     peopleCatalog = peopleIndex.people || [];
-    const defaultJourneyId = peopleIndex.default || peopleCatalog[0]?.id;
+    const initial = initialState();
+    const defaultJourneyId = initial.id || peopleIndex.default || peopleCatalog[0]?.id;
     if (!defaultJourneyId) throw new Error("缺少默认人物数据");
     renderPersonSelect();
     activeJourney = await loadJourney(defaultJourneyId);
     points = activeJourney.points;
     addWorldBase(land);
-    addChinaProvinces(china);
-    addWater(rivers, lakes);
-    addTerrainSources();
-    addBorders(countries);
     addRouteLayer();
     renderTitle();
     renderMarkers();
@@ -662,10 +701,25 @@ map.on("load", async () => {
     wireControls();
     drawMist();
     fitHome(0);
-    selectPoint(0, false);
+    selectPoint(clampIndex(initial.index), false);
     map.once("render", () => window.setTimeout(setLoaderHidden, 180));
+
+    // 次级图层：国界、省界、水系、地形阴影——延后懒加载，不阻塞首屏
+    const [countries, china, rivers, lakes] = await Promise.all([
+      getJson("geo/world-countries.json"),
+      getJson("geo/100000_full.json"),
+      getJson("geo/world-rivers.json"),
+      getJson("geo/world-lakes.json")
+    ]);
+    addChinaProvinces(china);
+    addWater(rivers, lakes);
+    addTerrainSources();
+    addBorders(countries);
   } catch (error) {
-    document.querySelector("#loader strong").textContent = "载入失败";
-    document.querySelector("#loader span").textContent = error.message;
+    console.error(error);
+    const strong = document.querySelector("#loader strong");
+    const span = document.querySelector("#loader span");
+    if (strong) strong.textContent = "载入失败";
+    if (span) span.textContent = error.message;
   }
 });

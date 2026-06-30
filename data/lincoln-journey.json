@@ -79,7 +79,7 @@
     {
       "id": "freeport",
       "name": "弗里波特",
-      "short": "林肯-道格拉斯辩论",
+      "short": "大辩论",
       "years": "1858",
       "type": "rising",
       "lnglat": [-89.62, 42.30],
@@ -151,7 +151,7 @@
     {
       "id": "springfield-burial",
       "name": "春田·归葬",
-      "short": "灵柩专列归春田",
+      "short": "归葬春田",
       "years": "1865",
       "type": "final",
       "lnglat": [-89.66, 39.82],

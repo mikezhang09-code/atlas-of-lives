@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <clipPath id="ogglobe"><circle cx="50" cy="50" r="45.5"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="630" fill="#ece2c8"/>
+  <rect width="1200" height="630" fill="none" stroke="#bd9a55" stroke-width="6" opacity="0.5"/>
+
+  <!-- emblem -->
+  <g transform="translate(90,165) scale(3)">
+    <circle cx="50" cy="50" r="47" fill="#f8efd9"/>
+    <g clip-path="url(#ogglobe)">
+      <g fill="none" stroke="#bd9a55" stroke-width="1.1" opacity="0.5">
+        <ellipse cx="50" cy="50" rx="30" ry="45"/>
+        <ellipse cx="50" cy="50" rx="14" ry="45"/>
+        <line x1="6" y1="34" x2="94" y2="34"/>
+        <line x1="3" y1="50" x2="97" y2="50"/>
+        <line x1="6" y1="66" x2="94" y2="66"/>
+      </g>
+      <path d="M0,64 L14,54 L24,59 L36,46 L48,58 L60,50 L74,60 L100,64 Z" fill="#7d6536"/>
+      <path d="M0,64 L20,52 L31,58 L45,38 L57,55 L70,47 L86,59 L100,64 Z" fill="#432f16"/>
+      <g fill="none" stroke-linecap="round">
+        <path d="M6,73 C22,68 32,79 50,73 S80,68 94,74" stroke="#296c67" stroke-width="2.1"/>
+        <path d="M16,84 C30,80 40,88 56,83 S82,79 90,84" stroke="#bd9a55" stroke-width="1.5" opacity="0.7"/>
+      </g>
+    </g>
+    <circle cx="50" cy="50" r="47" fill="none" stroke="#432f16" stroke-width="3"/>
+    <path d="M45,39 L40,29 A6,6 0 1 1 50,29 Z" fill="#9c2f1b"/>
+    <circle cx="45" cy="28" r="2.6" fill="#f8efd9"/>
+  </g>
+
+  <!-- title -->
+  <text x="470" y="300" font-family="'Songti SC','STSong','Noto Serif CJK SC','Source Han Serif SC',serif" font-size="128" font-weight="700" fill="#432f16" letter-spacing="8">山河列传</text>
+  <text x="474" y="378" font-family="Georgia,'Times New Roman',serif" font-size="58" font-weight="700" fill="#9c2f1b" letter-spacing="3">Atlas of Lives</text>
+  <text x="474" y="452" font-family="'Songti SC','STSong','Noto Serif CJK SC',serif" font-size="36" fill="#7d6536">把古今中外人物的一生，落回真实山河</text>
+</svg>
