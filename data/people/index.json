@@ -146,6 +146,15 @@
       "path": "data/zhenghe-journey.json"
     },
     {
+      "id": "washington",
+      "label": "华盛顿",
+      "name": "乔治·华盛顿",
+      "era": "美国独立",
+      "region": "北美",
+      "group": "美洲",
+      "path": "data/washington-journey.json"
+    },
+    {
       "id": "lewisclark",
       "label": "发现军团",
       "name": "刘易斯与克拉克",
