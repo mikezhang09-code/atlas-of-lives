@@ -3,29 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>山河行旅图 | 文学叙事地图</title>
-  <meta name="description" content="用真实中国山河地图讲述诗人的行旅、作品与心境。">
+  <title>山河列传 · Atlas of Lives</title>
+  <meta name="description" content="山河列传 · Atlas of Lives：把古今中外人物的一生，落回全球真实山河的叙事地图。">
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/maplibre-gl.css">
   <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
   <main id="app">
-    <div id="map" aria-label="诗人生平山河地图"></div>
+    <div id="map" aria-label="人物生平山河地图"></div>
     <div class="paper"></div>
     <div class="vignette"></div>
     <canvas id="mist"></canvas>
 
     <header class="titlebar">
-      <p id="titleKicker">真实山河 · 文学行旅 · 可漫游叙事地图</p>
+      <p id="titleKicker">真实山河 · 古今人物 · 可漫游叙事地图</p>
       <h1 id="titleHeading">东坡行旅图</h1>
       <p id="titleSubtitle">从眉山到儋州，把苏轼的一生落回山川与江河</p>
     </header>
 
     <section class="search" aria-label="选择人物并搜索地点或作品">
       <div class="person-field">
-        <label for="personSelect">人物</label>
-        <select id="personSelect" aria-label="选择人物"></select>
+        <span class="field-label">人物</span>
+        <div id="personSelect" class="person-select">
+          <button type="button" id="personTrigger" class="person-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <span id="personCurrent">苏轼 · 东坡</span>
+          </button>
+          <div id="personPanel" class="person-panel" role="listbox" hidden></div>
+        </div>
       </div>
       <label for="searchInput">搜地点 / 诗文</label>
       <div class="search-box">

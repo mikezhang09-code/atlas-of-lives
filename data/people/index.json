@@ -7,6 +7,7 @@
       "name": "苏轼",
       "era": "北宋",
       "region": "中国",
+      "group": "中国",
       "path": "data/sushi-journey.json"
     },
     {
@@ -15,6 +16,7 @@
       "name": "李白",
       "era": "盛唐",
       "region": "中国",
+      "group": "中国",
       "path": "data/libai-journey.json"
     },
     {
@@ -23,6 +25,7 @@
       "name": "铁木真",
       "era": "蒙古帝国",
       "region": "欧亚",
+      "group": "中国",
       "path": "data/genghis-journey.json"
     },
     {
@@ -31,6 +34,7 @@
       "name": "杜甫",
       "era": "盛唐",
       "region": "中国",
+      "group": "中国",
       "path": "data/dufu-journey.json"
     },
     {
@@ -39,6 +43,7 @@
       "name": "徐霞客",
       "era": "晚明",
       "region": "中国",
+      "group": "中国",
       "path": "data/xuxiake-journey.json"
     },
     {
@@ -47,6 +52,7 @@
       "name": "陈祎",
       "era": "盛唐",
       "region": "欧亚",
+      "group": "中国",
       "path": "data/xuanzang-journey.json"
     },
     {
@@ -55,6 +61,7 @@
       "name": "辛弃疾",
       "era": "南宋",
       "region": "中国",
+      "group": "中国",
       "path": "data/xinqiji-journey.json"
     },
     {
@@ -63,6 +70,7 @@
       "name": "李清照",
       "era": "两宋之交",
       "region": "中国",
+      "group": "中国",
       "path": "data/liqingzhao-journey.json"
     },
     {
@@ -71,6 +79,7 @@
       "name": "拿破仑",
       "era": "法兰西第一帝国",
       "region": "欧洲",
+      "group": "欧洲",
       "path": "data/napoleon-journey.json"
     },
     {
@@ -79,6 +88,7 @@
       "name": "尤利乌斯·恺撒",
       "era": "罗马共和末期",
       "region": "地中海",
+      "group": "欧洲",
       "path": "data/caesar-journey.json"
     },
     {
@@ -87,6 +97,7 @@
       "name": "莎士比亚",
       "era": "伊丽莎白时代",
       "region": "欧洲",
+      "group": "欧洲",
       "path": "data/shakespeare-journey.json"
     },
     {
@@ -95,6 +106,7 @@
       "name": "亚历山大大帝",
       "era": "马其顿王国",
       "region": "欧亚",
+      "group": "欧洲",
       "path": "data/alexander-journey.json"
     },
     {
@@ -103,6 +115,7 @@
       "name": "但丁",
       "era": "中世纪意大利",
       "region": "欧洲",
+      "group": "欧洲",
       "path": "data/dante-journey.json"
     },
     {
@@ -111,6 +124,7 @@
       "name": "汉尼拔",
       "era": "迦太基",
       "region": "地中海",
+      "group": "欧洲",
       "path": "data/hannibal-journey.json"
     },
     {
@@ -119,6 +133,7 @@
       "name": "荷马·奥德赛",
       "era": "古希腊史诗",
       "region": "地中海",
+      "group": "欧洲",
       "path": "data/homer-journey.json"
     },
     {
@@ -127,6 +142,7 @@
       "name": "郑和",
       "era": "明·永乐",
       "region": "印度洋",
+      "group": "中国",
       "path": "data/zhenghe-journey.json"
     },
     {
@@ -135,6 +151,7 @@
       "name": "刘易斯与克拉克",
       "era": "美国西进",
       "region": "北美",
+      "group": "美洲",
       "path": "data/lewisclark-journey.json"
     },
     {
@@ -143,6 +160,7 @@
       "name": "西蒙·玻利瓦尔",
       "era": "南美独立",
       "region": "南美",
+      "group": "美洲",
       "path": "data/bolivar-journey.json"
     },
     {
@@ -151,6 +169,7 @@
       "name": "克里斯托弗·哥伦布",
       "era": "大航海时代",
       "region": "大西洋",
+      "group": "美洲",
       "path": "data/columbus-journey.json"
     }
   ]

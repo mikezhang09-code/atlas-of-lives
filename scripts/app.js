@@ -299,7 +299,7 @@ function renderMarkers() {
 }
 
 function renderTitle() {
-  document.title = `${activeJourney.heading} | 山河叙事地图`;
+  document.title = `${activeJourney.heading} | 山河列传`;
   document.getElementById("titleKicker").textContent = activeJourney.kicker;
   document.getElementById("titleHeading").textContent = activeJourney.heading;
   document.getElementById("titleSubtitle").textContent = activeJourney.subtitle;
@@ -437,27 +437,96 @@ async function loadJourney(journeyId) {
   return journey;
 }
 
+function groupedCatalog() {
+  // 按 group 字段分组；缺省归入「其他」。分组顺序按首次出现的次序。
+  const order = [];
+  const byGroup = new Map();
+  peopleCatalog.forEach((person) => {
+    const key = person.group || person.region || "其他";
+    if (!byGroup.has(key)) {
+      byGroup.set(key, []);
+      order.push(key);
+    }
+    byGroup.get(key).push(person);
+  });
+  return order.map((key) => ({ key, people: byGroup.get(key) }));
+}
+
 function renderPersonSelect() {
-  const select = document.getElementById("personSelect");
-  select.replaceChildren(...peopleCatalog.map((person) => {
-    const option = document.createElement("option");
-    option.value = person.id;
-    option.textContent = `${person.name} · ${person.label}`;
-    return option;
+  const panel = document.getElementById("personPanel");
+  panel.replaceChildren(...groupedCatalog().map(({ key, people }) => {
+    const group = document.createElement("div");
+    group.className = "person-group";
+    group.dataset.group = key;
+
+    const head = document.createElement("button");
+    head.type = "button";
+    head.className = "person-group-head";
+    head.innerHTML = `<span class="grp-name">${key}</span><span class="grp-count">${people.length}</span><span class="grp-chevron">▾</span>`;
+    head.addEventListener("click", () => group.classList.toggle("collapsed"));
+
+    const list = document.createElement("div");
+    list.className = "person-group-list";
+    list.append(...people.map((person) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "person-item";
+      item.dataset.id = person.id;
+      item.textContent = `${person.name} · ${person.label}`;
+      item.addEventListener("click", () => {
+        closePersonPanel();
+        setJourney(person.id);
+      });
+      return item;
+    }));
+
+    group.append(head, list);
+    return group;
   }));
 }
 
+// 打开下拉时只展开当前人物所在的分组，其余折叠，避免一屏看不完
+function syncPersonPanel() {
+  const activeId = activeJourney?.id;
+  const panel = document.getElementById("personPanel");
+  panel.querySelectorAll(".person-group").forEach((group) => {
+    const hasActive = activeId && group.querySelector(`.person-item[data-id="${activeId}"]`);
+    group.classList.toggle("collapsed", !hasActive);
+  });
+  panel.querySelectorAll(".person-item").forEach((item) => {
+    item.classList.toggle("active", item.dataset.id === activeId);
+  });
+  const activeItem = panel.querySelector(".person-item.active");
+  if (activeItem) activeItem.scrollIntoView({ block: "nearest" });
+}
+
+function openPersonPanel() {
+  document.getElementById("personTrigger").setAttribute("aria-expanded", "true");
+  document.getElementById("personPanel").hidden = false;
+  syncPersonPanel();
+}
+
+function closePersonPanel() {
+  document.getElementById("personTrigger").setAttribute("aria-expanded", "false");
+  document.getElementById("personPanel").hidden = true;
+}
+
+function togglePersonPanel() {
+  if (document.getElementById("personPanel").hidden) openPersonPanel();
+  else closePersonPanel();
+}
+
 function updatePersonSelect(journeyId) {
-  document.getElementById("personSelect").value = journeyId;
+  const person = peopleCatalog.find((item) => item.id === journeyId);
+  document.getElementById("personCurrent").textContent = person ? `${person.name} · ${person.label}` : "—";
+  if (!document.getElementById("personPanel").hidden) syncPersonPanel();
 }
 
 async function setJourney(journeyId, flyHome = true) {
   if (loadingJourneyId || activeJourney?.id === journeyId) return;
   const search = document.querySelector(".search");
-  const select = document.getElementById("personSelect");
   loadingJourneyId = journeyId;
   search.classList.add("loading");
-  select.disabled = true;
   try {
     const nextJourney = await loadJourney(journeyId);
     if (!nextJourney) return;
@@ -467,7 +536,6 @@ async function setJourney(journeyId, flyHome = true) {
     updatePersonSelect(activeJourney?.id || "");
   } finally {
     loadingJourneyId = "";
-    select.disabled = false;
     search.classList.remove("loading");
   }
 }
@@ -510,13 +578,14 @@ function wireControls() {
   document.addEventListener("click", (event) => {
     const search = document.querySelector(".search");
     if (!search.contains(event.target)) document.getElementById("searchResults").hidden = true;
+    if (!document.getElementById("personSelect").contains(event.target)) closePersonPanel();
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !document.getElementById("poemModal").hidden) closePoemModal();
+    if (event.key !== "Escape") return;
+    if (!document.getElementById("poemModal").hidden) closePoemModal();
+    closePersonPanel();
   });
-  document.getElementById("personSelect").addEventListener("change", (event) => {
-    setJourney(event.target.value);
-  });
+  document.getElementById("personTrigger").addEventListener("click", togglePersonPanel);
   map.on("zoom", () => {
     const showFlags = map.getZoom() >= 4.4;
     markers.forEach(({ el, point }) => {

@@ -118,7 +118,8 @@ button {
   backdrop-filter: blur(12px);
 }
 
-.search label {
+.search label,
+.search .field-label {
   display: block;
   margin: 0 0 6px 2px;
   color: var(--ink-soft);
@@ -132,26 +133,121 @@ button {
   margin-bottom: 10px;
 }
 
-.person-field select {
+.person-select {
+  position: relative;
+}
+
+.person-trigger {
   width: 100%;
   height: 36px;
-  padding: 0 34px 0 11px;
+  padding: 0 30px 0 11px;
   border: 1px solid var(--gold-soft);
   border-radius: 9px;
-  appearance: none;
   background:
-    linear-gradient(45deg, transparent 50%, #8d6d35 50%) calc(100% - 17px) 15px / 6px 6px no-repeat,
-    linear-gradient(135deg, #8d6d35 50%, transparent 50%) calc(100% - 12px) 15px / 6px 6px no-repeat,
+    linear-gradient(45deg, transparent 50%, #8d6d35 50%) calc(100% - 15px) 15px / 6px 6px no-repeat,
+    linear-gradient(135deg, #8d6d35 50%, transparent 50%) calc(100% - 10px) 15px / 6px 6px no-repeat,
     rgba(255, 250, 238, .9);
   color: var(--ink);
   font: 700 14px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
   letter-spacing: 1px;
-  outline: none;
+  text-align: left;
+  cursor: pointer;
 }
 
-.person-field select:focus,
+.person-trigger:hover,
+.person-trigger[aria-expanded="true"],
 .search input:focus {
   border-color: var(--zhu);
+}
+
+.person-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 20;
+  max-height: 62vh;
+  overflow: auto;
+  padding: 6px;
+  border: 1px solid var(--gold-soft);
+  border-radius: 10px;
+  background: rgba(252, 246, 230, .98);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.person-panel[hidden] {
+  display: none;
+}
+
+.person-group + .person-group {
+  margin-top: 4px;
+}
+
+.person-group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 9px;
+  border: 0;
+  border-radius: 7px;
+  background: rgba(189, 154, 85, .2);
+  color: var(--ink);
+  font: 800 15px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 3px;
+  cursor: pointer;
+}
+
+.person-group-head:hover {
+  background: rgba(189, 154, 85, .24);
+}
+
+.grp-count {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: .75;
+}
+
+.grp-chevron {
+  font-size: 10px;
+  transition: transform .18s ease;
+}
+
+.person-group.collapsed .grp-chevron {
+  transform: rotate(-90deg);
+}
+
+.person-group-list {
+  display: grid;
+  gap: 3px;
+  padding: 4px 0 2px;
+}
+
+.person-group.collapsed .person-group-list {
+  display: none;
+}
+
+.person-item {
+  padding: 7px 10px;
+  border: 1px solid rgba(189, 154, 85, .22);
+  border-radius: 7px;
+  background: rgba(255, 252, 244, .7);
+  color: var(--ink);
+  text-align: left;
+  font: 700 13px/1.2 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.person-item:hover {
+  border-color: var(--zhu);
+}
+
+.person-item.active {
+  border-color: var(--zhu);
+  background: rgba(156, 47, 27, .1);
+  color: var(--zhu);
 }
 
 .search-box {
@@ -180,10 +276,14 @@ button {
   cursor: pointer;
 }
 
-.search.loading select,
+.search.loading .person-trigger,
 .search.loading input,
 .search.loading button {
   opacity: .58;
+}
+
+.search.loading .person-trigger {
+  pointer-events: none;
 }
 
 .search-results {
