@@ -754,6 +754,16 @@ button {
   font: 400 14.5px/1.85 "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+.poem-gloss-en p {
+  margin: 0 0 5px;
+  color: #6b5430;
+  font: 400 14.5px/1.75 Georgia, "Times New Roman", serif;
+}
+
+.poem-gloss-en + .poem-gloss-trans {
+  margin-top: 18px;
+}
+
 .poem-gloss-trans p {
   margin: 0 0 5px;
   color: #4f3a1f;

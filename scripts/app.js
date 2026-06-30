@@ -407,10 +407,12 @@ function renderPoemGloss(poem) {
   const toggle = document.getElementById("poemGlossToggle");
   const gloss = document.getElementById("poemGloss");
   const bg = document.getElementById("poemBg");
+  const en = document.getElementById("poemEn");
   const trans = document.getElementById("poemTrans");
   bg.replaceChildren();
+  en.replaceChildren();
   trans.replaceChildren();
-  const hasGloss = !!(poem.bg || (poem.trans && poem.trans.length));
+  const hasGloss = !!(poem.bg || (poem.en && poem.en.length) || (poem.trans && poem.trans.length));
   toggle.hidden = !hasGloss;
   gloss.hidden = true;
   toggle.setAttribute("aria-expanded", "false");
@@ -423,9 +425,19 @@ function renderPoemGloss(poem) {
     p.textContent = poem.bg;
     bg.append(h, p);
   }
+  if (poem.en && poem.en.length) {
+    const h = document.createElement("h3");
+    h.textContent = "现代英文";
+    en.append(h);
+    poem.en.forEach((line) => {
+      const p = document.createElement("p");
+      p.textContent = line;
+      en.append(p);
+    });
+  }
   if (poem.trans && poem.trans.length) {
     const h = document.createElement("h3");
-    h.textContent = "译文";
+    h.textContent = poem.en && poem.en.length ? "中文译文" : "译文";
     trans.append(h);
     poem.trans.forEach((line) => {
       const p = document.createElement("p");

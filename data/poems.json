@@ -1149,7 +1149,13 @@
       "只要人类还能呼吸、眼睛还能看见，",
       "此诗便长存，并赋予你生命。"
     ],
-    "bg": "莎士比亚最著名的十四行诗，以夏日为喻盛赞所爱之人的美，更宣告诗歌能让美超越时间、永世长存。"
+    "bg": "莎士比亚最著名的十四行诗，以夏日为喻盛赞所爱之人的美，更宣告诗歌能让美超越时间、永世长存。",
+    "en": [
+      "Should I compare you to a summer's day?",
+      "You are lovelier and more gentle than that.",
+      "As long as people can breathe and eyes can see,",
+      "this poem will live on, and it keeps you alive."
+    ]
   },
   "人生如舞台": {
     "author": "莎士比亚",
@@ -1165,7 +1171,13 @@
       "他们各有登场与退场，",
       "一个人一生扮演着许多角色。"
     ],
-    "bg": "出自喜剧《皆大欢喜》，忧郁的杰奎斯的著名独白，把人的一生比作舞台上的戏剧，道尽世事如戏。"
+    "bg": "出自喜剧《皆大欢喜》，忧郁的杰奎斯的著名独白，把人的一生比作舞台上的戏剧，道尽世事如戏。",
+    "en": [
+      "The whole world is a stage,",
+      "and all the men and women are merely actors;",
+      "they each make their exits and their entrances,",
+      "and over a lifetime one person plays many roles."
+    ]
   },
   "罗密欧与朱丽叶·阳台": {
     "author": "莎士比亚",
@@ -1181,7 +1193,13 @@
       "名字算得了什么？我们称之为玫瑰的花，",
       "换个名字，也一样芬芳。"
     ],
-    "bg": "《罗密欧与朱丽叶》第二幕著名的阳台一场，罗密欧夜会朱丽叶，借「玫瑰之名」道出爱情超越家族世仇的执着。"
+    "bg": "《罗密欧与朱丽叶》第二幕著名的阳台一场，罗密欧夜会朱丽叶，借「玫瑰之名」道出爱情超越家族世仇的执着。",
+    "en": [
+      "Wait — what light is that breaking through the window over there?",
+      "That window is the east, and Juliet is the sun.",
+      "What does a name really matter? The thing we call a rose",
+      "would smell just as sweet under any other name."
+    ]
   },
   "亨利五世·圣克里斯宾日": {
     "author": "莎士比亚",
@@ -1195,7 +1213,12 @@
       "因为今天与我一同流血的人，",
       "就是我的兄弟。"
     ],
-    "bg": "《亨利五世》第四幕，阿金库尔决战前，英王亨利五世激励寡不敌众的将士，以「兄弟连」之语鼓舞士气，是英语中最著名的战前演说。"
+    "bg": "《亨利五世》第四幕，阿金库尔决战前，英王亨利五世激励寡不敌众的将士，以「兄弟连」之语鼓舞士气，是英语中最著名的战前演说。",
+    "en": [
+      "We are few — but we lucky few, we are a band of brothers;",
+      "for anyone who sheds his blood with me today",
+      "will be my brother."
+    ]
   },
   "哈姆雷特·生存还是毁灭": {
     "author": "莎士比亚",
@@ -1211,7 +1234,13 @@
       "还是挺身反抗无边的苦难，",
       "通过斗争把它们扫清。"
     ],
-    "bg": "《哈姆雷特》第三幕，王子在复仇的犹疑中独白，于生与死、忍受与反抗之间叩问存在的意义，是西方文学最著名的独白。"
+    "bg": "《哈姆雷特》第三幕，王子在复仇的犹疑中独白，于生与死、忍受与反抗之间叩问存在的意义，是西方文学最著名的独白。",
+    "en": [
+      "To live, or to die — that is the question:",
+      "Is it nobler to endure in silence",
+      "the blows and arrows of cruel fortune,",
+      "or to take up arms against a sea of troubles and fight back?"
+    ]
   },
   "第十二夜·音乐": {
     "author": "莎士比亚",
@@ -1225,7 +1254,12 @@
       "让我享个饱足，好让爱欲",
       "因过饱而生厌，终至消亡。"
     ],
-    "bg": "喜剧《第十二夜》开场，奥西诺公爵借音乐抒发对爱情的沉溺与厌足，奠定全剧关于爱与错认的基调。"
+    "bg": "喜剧《第十二夜》开场，奥西诺公爵借音乐抒发对爱情的沉溺与厌足，奠定全剧关于爱与错认的基调。",
+    "en": [
+      "If music is the food that love feeds on, then keep playing;",
+      "give me so much of it that, overfed,",
+      "my appetite for love sickens and dies."
+    ]
   },
   "麦克白·明天": {
     "author": "莎士比亚",
@@ -1241,7 +1275,13 @@
       "熄灭吧，熄灭吧，短暂的烛火！",
       "人生不过是一个行走的影子。"
     ],
-    "bg": "《麦克白》第五幕，得知夫人死讯的麦克白发出这段苍凉独白，把人生看作转瞬即灭的烛火与行走的影子，是其野心幻灭后的虚无之叹。"
+    "bg": "《麦克白》第五幕，得知夫人死讯的麦克白发出这段苍凉独白，把人生看作转瞬即灭的烛火与行走的影子，是其野心幻灭后的虚无之叹。",
+    "en": [
+      "Tomorrow, and tomorrow, and tomorrow,",
+      "creeps along at this petty pace from day to day,",
+      "Go out, go out, you brief candle!",
+      "Life is nothing but a walking shadow."
+    ]
   },
   "暴风雨·梦中之物": {
     "author": "莎士比亚",
@@ -1255,7 +1295,12 @@
       "我们短暂的一生，前后都环绕在睡眠之中。",
       "啊，美丽的新世界，竟有这样的人物！"
     ],
-    "bg": "《暴风雨》近乎莎士比亚的告别之作，魔法师普洛斯彼罗道出「人生如梦」，在宽恕与放下中谢幕。"
+    "bg": "《暴风雨》近乎莎士比亚的告别之作，魔法师普洛斯彼罗道出「人生如梦」，在宽恕与放下中谢幕。",
+    "en": [
+      "We are made of the same stuff as dreams,",
+      "and our brief life is rounded off with a sleep.",
+      "Oh wonderful new world, that has such people in it!"
+    ]
   },
   "神曲·地狱篇·开篇": {
     "author": "但丁",
