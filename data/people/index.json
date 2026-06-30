@@ -104,6 +104,30 @@
       "era": "中世纪意大利",
       "region": "欧洲",
       "path": "data/dante-journey.json"
+    },
+    {
+      "id": "hannibal",
+      "label": "汉尼拔",
+      "name": "汉尼拔",
+      "era": "迦太基",
+      "region": "地中海",
+      "path": "data/hannibal-journey.json"
+    },
+    {
+      "id": "homer",
+      "label": "奥德修斯",
+      "name": "荷马·奥德赛",
+      "era": "古希腊史诗",
+      "region": "地中海",
+      "path": "data/homer-journey.json"
+    },
+    {
+      "id": "zhenghe",
+      "label": "郑和",
+      "name": "郑和",
+      "era": "明·永乐",
+      "region": "印度洋",
+      "path": "data/zhenghe-journey.json"
     }
   ]
 }
