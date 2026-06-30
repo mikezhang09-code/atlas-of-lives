@@ -33,7 +33,7 @@
     {
       "id": "khentii",
       "name": "肯特山",
-      "short": "肯特",
+      "short": "肯特山",
       "years": "1162-1189",
       "type": "origin",
       "lnglat": [109.8, 48.45],
@@ -45,7 +45,7 @@
     {
       "id": "onon",
       "name": "斡难河",
-      "short": "斡难",
+      "short": "斡难河",
       "years": "1206",
       "type": "unify",
       "lnglat": [110.3, 48.85],
@@ -69,7 +69,7 @@
     {
       "id": "yehuling",
       "name": "野狐岭",
-      "short": "野狐",
+      "short": "野狐岭",
       "years": "1211",
       "type": "east",
       "lnglat": [115.35, 40.75],
@@ -93,7 +93,7 @@
     {
       "id": "balasagun",
       "name": "八剌沙衮",
-      "short": "八剌",
+      "short": "八剌沙衮",
       "years": "1218",
       "type": "west",
       "lnglat": [74.6, 42.87],
@@ -105,7 +105,7 @@
     {
       "id": "otrar",
       "name": "讹答剌",
-      "short": "讹答",
+      "short": "讹答剌",
       "years": "1219",
       "type": "west",
       "lnglat": [68.31, 42.85],
@@ -117,7 +117,7 @@
     {
       "id": "bukhara",
       "name": "布哈拉",
-      "short": "布哈",
+      "short": "布哈拉",
       "years": "1220",
       "type": "west",
       "lnglat": [64.421, 39.768],
@@ -129,7 +129,7 @@
     {
       "id": "samarkand",
       "name": "撒马尔罕",
-      "short": "撒马",
+      "short": "撒马尔罕",
       "years": "1220",
       "type": "west",
       "lnglat": [66.974, 39.627],
@@ -141,7 +141,7 @@
     {
       "id": "gurganj",
       "name": "玉龙杰赤",
-      "short": "玉龙",
+      "short": "玉龙杰赤",
       "years": "1221",
       "type": "west",
       "lnglat": [59.966, 42.327],
@@ -153,7 +153,7 @@
     {
       "id": "indus",
       "name": "印度河",
-      "short": "印度",
+      "short": "印度河",
       "years": "1221",
       "type": "west",
       "lnglat": [72.25, 33.9],

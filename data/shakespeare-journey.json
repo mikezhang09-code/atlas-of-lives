@@ -1,0 +1,225 @@
+{
+  "id": "shakespeare",
+  "title": "莎士比亚的戏剧疆域",
+  "heading": "莎士比亚的戏剧疆域",
+  "kicker": "真实山河 · 想象的版图 · 从英格兰到地中海",
+  "subtitle": "他一生几乎未离开英格兰，却用想象把故事种满了整个欧洲与地中海",
+  "seal": "莎",
+  "unit": "部",
+  "route": false,
+  "searchPlaceholder": "哈姆雷特、罗密欧、麦克白、暴风雨",
+  "loaderText": "正在载入欧陆山河与莎士比亚的戏剧世界",
+  "bounds": [[-7, 30], [37, 58]],
+  "types": {
+    "home": {
+      "label": "故土",
+      "color": "#5b5347"
+    },
+    "tragedy": {
+      "label": "悲剧",
+      "color": "#9c2f1b"
+    },
+    "comedy": {
+      "label": "喜剧",
+      "color": "#8f5d14"
+    },
+    "history": {
+      "label": "历史剧",
+      "color": "#6f4d86"
+    },
+    "romance": {
+      "label": "传奇剧",
+      "color": "#2f6d6a"
+    }
+  },
+  "points": [
+    {
+      "id": "stratford",
+      "name": "斯特拉特福",
+      "short": "故乡",
+      "years": "1564",
+      "type": "home",
+      "lnglat": [-1.707, 52.192],
+      "summary": "莎士比亚生于埃文河畔的斯特拉特福，也在这里走完一生、长眠于圣三一教堂。他真实的足迹，几乎只在故乡与伦敦之间往返。",
+      "quote": "只要人类还能呼吸、眼睛还能看见，此诗便长存，并赋予你生命。",
+      "works": ["十四行诗", "Sonnets"],
+      "poem": "十四行诗·第十八首",
+      "importance": 5
+    },
+    {
+      "id": "london-globe",
+      "name": "伦敦·环球剧场",
+      "short": "环球",
+      "years": "1599",
+      "type": "home",
+      "lnglat": [-0.0972, 51.508],
+      "summary": "泰晤士河南岸的环球剧场，是莎士比亚剧团的舞台。在这座木结构的圆形剧场里，他笔下的整个世界一夜夜被搬演给伦敦的观众。",
+      "quote": "全世界是一个舞台，所有男女不过是其中的演员。",
+      "works": ["皆大欢喜", "As You Like It"],
+      "poem": "人生如舞台",
+      "importance": 5
+    },
+    {
+      "id": "verona",
+      "name": "维罗纳",
+      "short": "维罗纳",
+      "years": "约1595",
+      "type": "tragedy",
+      "lnglat": [10.993, 45.438],
+      "summary": "意大利维罗纳，蒙太古与凯普莱特两家世仇的城市。《罗密欧与朱丽叶》在这里把少年人的爱情，推到生死与和解的尽头。",
+      "quote": "名字算得了什么？我们称之为玫瑰的花，换个名字，也一样芬芳。",
+      "works": ["罗密欧与朱丽叶", "Romeo and Juliet"],
+      "poem": "罗密欧与朱丽叶·阳台",
+      "importance": 5
+    },
+    {
+      "id": "athens",
+      "name": "雅典",
+      "short": "雅典",
+      "years": "约1595",
+      "type": "comedy",
+      "lnglat": [23.728, 37.984],
+      "summary": "雅典城外的月夜森林里，精灵、恋人与匠人彼此错认。《仲夏夜之梦》让爱情、魔法与喜剧在一夜之间交织又复原。",
+      "quote": "真爱无坦途。",
+      "works": ["仲夏夜之梦", "A Midsummer Night's Dream"],
+      "importance": 4
+    },
+    {
+      "id": "messina",
+      "name": "墨西拿",
+      "short": "墨西拿",
+      "years": "约1598",
+      "type": "comedy",
+      "lnglat": [15.554, 38.194],
+      "summary": "西西里的墨西拿，凯旋归来的军人与机智的女子在唇枪舌剑中相爱。《无事生非》是莎士比亚最闪亮的语言喜剧之一。",
+      "quote": "我宁愿听我的狗对着乌鸦叫，也不愿听一个男人发誓爱我。",
+      "works": ["无事生非", "Much Ado About Nothing"],
+      "importance": 4
+    },
+    {
+      "id": "agincourt",
+      "name": "阿金库尔",
+      "short": "阿金库尔",
+      "years": "约1599",
+      "type": "history",
+      "lnglat": [2.13, 50.46],
+      "summary": "法国北部的阿金库尔战场，亨利五世以寡敌众。莎士比亚的历史剧在这里把王权、战争与英格兰的民族叙事熔铸成不朽的台词。",
+      "quote": "我们这一小队，幸运的一小队，我们是兄弟。",
+      "works": ["亨利五世", "Henry V"],
+      "poem": "亨利五世·圣克里斯宾日",
+      "importance": 4
+    },
+    {
+      "id": "rome",
+      "name": "罗马",
+      "short": "罗马",
+      "years": "约1599",
+      "type": "tragedy",
+      "lnglat": [12.4964, 41.9028],
+      "summary": "罗马元老院的台阶上，恺撒倒在刀光之中。《尤利乌斯·恺撒》把权力、背叛与演说的力量摆上舞台——与这张地图上真正的恺撒遥相呼应。",
+      "quote": "还有你吗，布鲁图斯？",
+      "works": ["尤利乌斯·恺撒", "Julius Caesar"],
+      "importance": 4
+    },
+    {
+      "id": "elsinore",
+      "name": "艾尔西诺",
+      "short": "丹麦",
+      "years": "约1600",
+      "type": "tragedy",
+      "lnglat": [12.585, 56.038],
+      "summary": "丹麦的艾尔西诺城堡，王子哈姆雷特在父亲的鬼魂与复仇的犹疑之间徘徊。《哈姆雷特》是莎士比亚对人之存在最深的叩问。",
+      "quote": "生存还是毁灭，这是一个问题。",
+      "works": ["哈姆雷特", "Hamlet"],
+      "poem": "哈姆雷特·生存还是毁灭",
+      "importance": 5
+    },
+    {
+      "id": "illyria",
+      "name": "伊利里亚",
+      "short": "伊利里亚",
+      "years": "约1601",
+      "type": "comedy",
+      "lnglat": [16.4, 43.5],
+      "summary": "亚得里亚海岸的伊利里亚，一场海难后兄妹失散、女扮男装。《第十二夜》在错认与误会里，唱出莎士比亚最温柔的爱情喜剧。",
+      "quote": "假如音乐是爱情的食粮，那就奏下去吧。",
+      "works": ["第十二夜", "Twelfth Night"],
+      "poem": "第十二夜·音乐",
+      "importance": 4
+    },
+    {
+      "id": "venice",
+      "name": "威尼斯",
+      "short": "威尼斯",
+      "years": "约1603",
+      "type": "tragedy",
+      "lnglat": [12.335, 45.434],
+      "summary": "水城威尼斯与塞浦路斯前线，摩尔将军奥赛罗被嫉妒一步步吞没。《奥赛罗》写尽信任如何被谗言扭成毁灭。",
+      "quote": "啊，主帅，要提防嫉妒——那是一只绿眼的妖魔。",
+      "works": ["奥赛罗", "Othello"],
+      "importance": 4
+    },
+    {
+      "id": "dover",
+      "name": "多佛",
+      "short": "多佛",
+      "years": "约1606",
+      "type": "tragedy",
+      "lnglat": [1.31, 51.13],
+      "summary": "古不列颠的海崖与荒原，老王李尔分国失国、于风暴中疯狂。《李尔王》在多佛的悬崖边，把人的尊严与脆弱推到极处。",
+      "quote": "一无所有只能换来一无所有。",
+      "works": ["李尔王", "King Lear"],
+      "importance": 4
+    },
+    {
+      "id": "scotland",
+      "name": "苏格兰",
+      "short": "苏格兰",
+      "years": "约1606",
+      "type": "tragedy",
+      "lnglat": [-4.22, 57.48],
+      "summary": "苏格兰的荒原与城堡，女巫的预言点燃麦克白的野心。《麦克白》写权力如何把人引向弑君、恐惧与虚无。",
+      "quote": "熄灭吧，熄灭吧，短暂的烛火！人生不过是一个行走的影子。",
+      "works": ["麦克白", "Macbeth"],
+      "poem": "麦克白·明天",
+      "importance": 5
+    },
+    {
+      "id": "alexandria",
+      "name": "亚历山大",
+      "short": "埃及",
+      "years": "约1606",
+      "type": "tragedy",
+      "lnglat": [29.9, 31.2],
+      "summary": "埃及的亚历山大与罗马之间，安东尼在权力与爱情间撕裂。《安东尼与克莉奥佩特拉》把帝国的兴亡写成一曲壮丽的挽歌。",
+      "quote": "岁月不能使她衰老，习惯也腐蚀不了她无穷的变化。",
+      "works": ["安东尼与克莉奥佩特拉", "Antony and Cleopatra"],
+      "importance": 4
+    },
+    {
+      "id": "bohemia",
+      "name": "波西米亚",
+      "short": "波西米亚",
+      "years": "约1610",
+      "type": "romance",
+      "lnglat": [14.42, 49.0],
+      "summary": "莎士比亚给内陆的波西米亚安了一片海岸——地理上的'错误'，恰是想象的自由。《冬天的故事》在嫉妒与时间之后，迎来宽恕与重生。",
+      "quote": "退场，被一只熊追赶着。",
+      "works": ["冬天的故事", "The Winter's Tale"],
+      "importance": 4
+    },
+    {
+      "id": "tempest-isle",
+      "name": "地中海孤岛",
+      "short": "孤岛",
+      "years": "约1611",
+      "type": "romance",
+      "lnglat": [11.5, 37.0],
+      "summary": "突尼斯与那不勒斯之间的一座荒岛，被放逐的魔法师普洛斯彼罗在此掌控风暴与命运。《暴风雨》是莎士比亚近乎告别的作品。",
+      "quote": "我们都是梦幻所凝成的人物，短暂的一生，前后都环绕在睡眠之中。",
+      "works": ["暴风雨", "The Tempest"],
+      "poem": "暴风雨·梦中之物",
+      "importance": 5
+    }
+  ]
+}

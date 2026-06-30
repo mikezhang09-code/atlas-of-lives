@@ -242,12 +242,14 @@ function addTerrainSources() {
 }
 
 function makeRoute() {
+  // route:false 的人物（如以作品而非行程为主的文学家）不画连接线
+  const coordinates = activeJourney?.route === false ? [] : points.map((point) => point.lnglat);
   return {
     type: "Feature",
     properties: {},
     geometry: {
       type: "LineString",
-      coordinates: points.map((point) => point.lnglat)
+      coordinates
     }
   };
 }
@@ -330,7 +332,7 @@ function selectPoint(index, fly) {
   document.getElementById("storyWorks").innerHTML = point.works.map((work) => `<span>${work}</span>`).join("");
   document.getElementById("storyQuote").textContent = point.quote;
   document.getElementById("poemOpen").hidden = !poem;
-  document.getElementById("progressText").textContent = `第 ${activeIndex + 1} / ${points.length} 站`;
+  document.getElementById("progressText").textContent = `第 ${activeIndex + 1} / ${points.length} ${activeJourney.unit || "站"}`;
   document.getElementById("progressBar").style.transform = `scaleX(${(activeIndex + 1) / points.length})`;
   markers.forEach((marker, i) => marker.el.classList.toggle("active", i === activeIndex));
   document.querySelectorAll(".timeline li").forEach((item) => {

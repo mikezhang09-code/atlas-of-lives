@@ -80,6 +80,14 @@
       "era": "罗马共和末期",
       "region": "地中海",
       "path": "data/caesar-journey.json"
+    },
+    {
+      "id": "shakespeare",
+      "label": "莎翁",
+      "name": "莎士比亚",
+      "era": "伊丽莎白时代",
+      "region": "欧洲",
+      "path": "data/shakespeare-journey.json"
     }
   ]
 }

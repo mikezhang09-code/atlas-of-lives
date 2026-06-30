@@ -46,7 +46,7 @@
     {
       "id": "alesia",
       "name": "阿莱西亚",
-      "short": "阿莱",
+      "short": "阿莱西亚",
       "years": "前52",
       "type": "campaign",
       "lnglat": [4.5, 47.537],
@@ -58,7 +58,7 @@
     {
       "id": "britannia",
       "name": "不列颠",
-      "short": "不列",
+      "short": "不列颠",
       "years": "前55-前54",
       "type": "campaign",
       "lnglat": [1.31, 51.13],
@@ -70,7 +70,7 @@
     {
       "id": "rubicon",
       "name": "卢比孔河",
-      "short": "卢比",
+      "short": "卢比孔河",
       "years": "前49",
       "type": "turning",
       "lnglat": [12.388, 44.092],
@@ -82,7 +82,7 @@
     {
       "id": "pharsalus",
       "name": "法萨卢斯",
-      "short": "法萨",
+      "short": "法萨卢斯",
       "years": "前48",
       "type": "peak",
       "lnglat": [22.385, 39.288],
@@ -94,7 +94,7 @@
     {
       "id": "alexandria",
       "name": "亚历山大",
-      "short": "亚历",
+      "short": "亚历山大",
       "years": "前48-前47",
       "type": "campaign",
       "lnglat": [29.9187, 31.2001],
@@ -118,7 +118,7 @@
     {
       "id": "thapsus",
       "name": "塔普苏斯",
-      "short": "塔普",
+      "short": "塔普苏斯",
       "years": "前46",
       "type": "campaign",
       "lnglat": [11.044, 35.62],

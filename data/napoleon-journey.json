@@ -38,7 +38,7 @@
     {
       "id": "ajaccio",
       "name": "阿雅克肖",
-      "short": "科西",
+      "short": "阿雅克肖",
       "years": "1769",
       "type": "origin",
       "lnglat": [8.736, 41.926],
@@ -98,7 +98,7 @@
     {
       "id": "marengo",
       "name": "马伦哥",
-      "short": "马伦",
+      "short": "马伦哥",
       "years": "1800",
       "type": "campaign",
       "lnglat": [8.772, 44.879],
@@ -110,7 +110,7 @@
     {
       "id": "austerlitz",
       "name": "奥斯特里茨",
-      "short": "奥斯",
+      "short": "奥斯特里茨",
       "years": "1805",
       "type": "peak",
       "lnglat": [16.762, 49.128],
@@ -122,7 +122,7 @@
     {
       "id": "madrid",
       "name": "马德里",
-      "short": "马德",
+      "short": "马德里",
       "years": "1808",
       "type": "campaign",
       "lnglat": [-3.703, 40.416],
@@ -134,7 +134,7 @@
     {
       "id": "wagram",
       "name": "瓦格拉姆",
-      "short": "瓦格",
+      "short": "瓦格拉姆",
       "years": "1809",
       "type": "peak",
       "lnglat": [16.573, 48.301],
@@ -146,7 +146,7 @@
     {
       "id": "moscow",
       "name": "莫斯科",
-      "short": "莫斯",
+      "short": "莫斯科",
       "years": "1812",
       "type": "campaign",
       "lnglat": [37.6173, 55.7558],
@@ -158,7 +158,7 @@
     {
       "id": "leipzig",
       "name": "莱比锡",
-      "short": "莱比",
+      "short": "莱比锡",
       "years": "1813",
       "type": "decline",
       "lnglat": [12.374, 51.34],
@@ -170,7 +170,7 @@
     {
       "id": "elba",
       "name": "厄尔巴岛",
-      "short": "厄尔",
+      "short": "厄尔巴岛",
       "years": "1814",
       "type": "exile",
       "lnglat": [10.302, 42.773],
@@ -182,7 +182,7 @@
     {
       "id": "waterloo",
       "name": "滑铁卢",
-      "short": "滑铁",
+      "short": "滑铁卢",
       "years": "1815",
       "type": "decline",
       "lnglat": [4.412, 50.68],
@@ -194,7 +194,7 @@
     {
       "id": "saint-helena",
       "name": "圣赫勒拿",
-      "short": "圣赫",
+      "short": "圣赫勒拿",
       "years": "1815-1821",
       "type": "exile",
       "lnglat": [-5.717, -15.965],
