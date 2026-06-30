@@ -225,6 +225,15 @@
       "region": "环球",
       "group": "欧洲",
       "path": "data/darwin-journey.json"
+    },
+    {
+      "id": "victoria",
+      "label": "维多利亚",
+      "name": "维多利亚女王",
+      "era": "大英帝国",
+      "region": "全球",
+      "group": "欧洲",
+      "path": "data/victoria-journey.json"
     }
   ]
 }
