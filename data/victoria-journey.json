@@ -11,6 +11,7 @@
   "loaderText": "正在载入全球山河与维多利亚的帝国疆域",
   "bounds": [[-90, -45], [180, 62]],
   "types": {
+    "dawn": { "label": "破晓", "color": "#296c67" },
     "throne": { "label": "王座", "color": "#5b5347" },
     "jewel": { "label": "帝国明珠", "color": "#9c2f1b" },
     "dominion": { "label": "自治领", "color": "#6f4d86" },
@@ -19,6 +20,18 @@
     "dusk": { "label": "落日", "color": "#7d3424" }
   },
   "points": [
+    {
+      "id": "kensington",
+      "name": "伦敦·肯辛顿宫",
+      "short": "诞生",
+      "years": "1819",
+      "type": "dawn",
+      "lnglat": [-0.1877, 51.505],
+      "summary": "1819 年 5 月 24 日，维多利亚生于伦敦的肯辛顿宫。她本是王位继承序列中并不起眼的一位公主，命运却接连为她扫清了通往王座的道路。",
+      "quote": "一个不被看好的公主，却被命运一步步推向了王座。",
+      "works": ["1819·5·24 诞生", "肯辛顿宫"],
+      "importance": 5
+    },
     {
       "id": "london",
       "name": "伦敦·白金汉宫",
