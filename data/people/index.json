@@ -4,236 +4,288 @@
     {
       "id": "sushi",
       "label": "东坡",
+      "seal": "苏",
       "name": "苏轼",
       "era": "北宋",
       "region": "中国",
       "group": "中国",
-      "path": "data/sushi-journey.json"
+      "path": "data/sushi-journey.json",
+      "tagline": "一蓑烟雨任平生"
     },
     {
       "id": "libai",
       "label": "太白",
+      "seal": "李",
       "name": "李白",
       "era": "盛唐",
       "region": "中国",
       "group": "中国",
-      "path": "data/libai-journey.json"
+      "path": "data/libai-journey.json",
+      "tagline": "天生我材必有用"
     },
     {
       "id": "genghis",
       "label": "成吉思汗",
+      "seal": "汗",
       "name": "铁木真",
       "era": "蒙古帝国",
       "region": "欧亚",
       "group": "中国",
-      "path": "data/genghis-journey.json"
+      "path": "data/genghis-journey.json",
+      "tagline": "马蹄踏出的欧亚帝国"
     },
     {
       "id": "dufu",
       "label": "少陵",
+      "seal": "杜",
       "name": "杜甫",
       "era": "盛唐",
       "region": "中国",
       "group": "中国",
-      "path": "data/dufu-journey.json"
+      "path": "data/dufu-journey.json",
+      "tagline": "诗史里的家国离乱"
     },
     {
       "id": "xuxiake",
       "label": "霞客",
+      "seal": "徐",
       "name": "徐霞客",
       "era": "晚明",
       "region": "中国",
       "group": "中国",
-      "path": "data/xuxiake-journey.json"
+      "path": "data/xuxiake-journey.json",
+      "tagline": "朝碧海而暮苍梧"
     },
     {
       "id": "xuanzang",
       "label": "玄奘",
+      "seal": "奘",
       "name": "陈祎",
       "era": "盛唐",
       "region": "欧亚",
       "group": "中国",
-      "path": "data/xuanzang-journey.json"
+      "path": "data/xuanzang-journey.json",
+      "tagline": "万里孤征取真经"
     },
     {
       "id": "xinqiji",
       "label": "幼安",
+      "seal": "辛",
       "name": "辛弃疾",
       "era": "南宋",
       "region": "中国",
       "group": "中国",
-      "path": "data/xinqiji-journey.json"
+      "path": "data/xinqiji-journey.json",
+      "tagline": "醉里挑灯看剑"
     },
     {
       "id": "liqingzhao",
       "label": "易安",
+      "seal": "易",
       "name": "李清照",
       "era": "两宋之交",
       "region": "中国",
       "group": "中国",
-      "path": "data/liqingzhao-journey.json"
+      "path": "data/liqingzhao-journey.json",
+      "tagline": "婉约词宗，半世飘零"
     },
     {
       "id": "napoleon",
       "label": "波拿巴",
+      "seal": "拿",
       "name": "拿破仑",
       "era": "法兰西第一帝国",
       "region": "欧洲",
       "group": "欧洲",
-      "path": "data/napoleon-journey.json"
+      "path": "data/napoleon-journey.json",
+      "tagline": "从科西嘉到滑铁卢"
     },
     {
       "id": "caesar",
       "label": "恺撒",
+      "seal": "凯",
       "name": "尤利乌斯·恺撒",
       "era": "罗马共和末期",
       "region": "地中海",
       "group": "欧洲",
-      "path": "data/caesar-journey.json"
+      "path": "data/caesar-journey.json",
+      "tagline": "我来，我见，我征服"
     },
     {
       "id": "shakespeare",
       "label": "莎翁",
+      "seal": "莎",
       "name": "莎士比亚",
       "era": "伊丽莎白时代",
       "region": "欧洲",
       "group": "欧洲",
-      "path": "data/shakespeare-journey.json"
+      "path": "data/shakespeare-journey.json",
+      "tagline": "把故事种满欧陆的戏剧疆域"
     },
     {
       "id": "alexander",
       "label": "亚历山大",
+      "seal": "亚",
       "name": "亚历山大大帝",
       "era": "马其顿王国",
       "region": "欧亚",
       "group": "欧洲",
-      "path": "data/alexander-journey.json"
+      "path": "data/alexander-journey.json",
+      "tagline": "十年东征，兵抵印度"
     },
     {
       "id": "dante",
       "label": "但丁",
+      "seal": "但",
       "name": "但丁",
       "era": "中世纪意大利",
       "region": "欧洲",
       "group": "欧洲",
-      "path": "data/dante-journey.json"
+      "path": "data/dante-journey.json",
+      "tagline": "流放途中写就《神曲》"
     },
     {
       "id": "hannibal",
       "label": "汉尼拔",
+      "seal": "拔",
       "name": "汉尼拔",
       "era": "迦太基",
       "region": "地中海",
       "group": "欧洲",
-      "path": "data/hannibal-journey.json"
+      "path": "data/hannibal-journey.json",
+      "tagline": "率象翻越阿尔卑斯"
     },
     {
       "id": "homer",
       "label": "奥德修斯",
+      "seal": "奥",
       "name": "荷马·奥德赛",
       "era": "古希腊史诗",
       "region": "地中海",
       "group": "欧洲",
-      "path": "data/homer-journey.json"
+      "path": "data/homer-journey.json",
+      "tagline": "奥德修斯的十年归途"
     },
     {
       "id": "zhenghe",
       "label": "郑和",
+      "seal": "郑",
       "name": "郑和",
       "era": "明·永乐",
       "region": "印度洋",
       "group": "中国",
-      "path": "data/zhenghe-journey.json"
+      "path": "data/zhenghe-journey.json",
+      "tagline": "云帆高张，七下西洋"
     },
     {
       "id": "washington",
       "label": "华盛顿",
+      "seal": "华",
       "name": "乔治·华盛顿",
       "era": "美国独立",
       "region": "北美",
       "group": "美洲",
-      "path": "data/washington-journey.json"
+      "path": "data/washington-journey.json",
+      "tagline": "独立战争的奠基者"
     },
     {
       "id": "lincoln",
       "label": "林肯",
+      "seal": "林",
       "name": "亚伯拉罕·林肯",
       "era": "美国南北战争",
       "region": "北美",
       "group": "美洲",
-      "path": "data/lincoln-journey.json"
+      "path": "data/lincoln-journey.json",
+      "tagline": "分裂之家的守护者"
     },
     {
       "id": "lewisclark",
       "label": "发现军团",
+      "seal": "探",
       "name": "刘易斯与克拉克",
       "era": "美国西进",
       "region": "北美",
       "group": "美洲",
-      "path": "data/lewisclark-journey.json"
+      "path": "data/lewisclark-journey.json",
+      "tagline": "横越北美的发现军团"
     },
     {
       "id": "bolivar",
       "label": "玻利瓦尔",
+      "seal": "玻",
       "name": "西蒙·玻利瓦尔",
       "era": "南美独立",
       "region": "南美",
       "group": "美洲",
-      "path": "data/bolivar-journey.json"
+      "path": "data/bolivar-journey.json",
+      "tagline": "南美的解放者"
     },
     {
       "id": "columbus",
       "label": "哥伦布",
+      "seal": "哥",
       "name": "克里斯托弗·哥伦布",
       "era": "大航海时代",
       "region": "大西洋",
       "group": "欧洲",
-      "path": "data/columbus-journey.json"
+      "path": "data/columbus-journey.json",
+      "tagline": "一路向西寻东方"
     },
     {
       "id": "magellan",
       "label": "麦哲伦",
+      "seal": "麦",
       "name": "麦哲伦",
       "era": "大航海时代",
       "region": "环球",
       "group": "欧洲",
-      "path": "data/magellan-journey.json"
+      "path": "data/magellan-journey.json",
+      "tagline": "首航环球的开拓者"
     },
     {
       "id": "sanmartin",
       "label": "圣马丁",
+      "seal": "圣",
       "name": "何塞·德·圣马丁",
       "era": "南美独立",
       "region": "南美",
       "group": "美洲",
-      "path": "data/sanmartin-journey.json"
+      "path": "data/sanmartin-journey.json",
+      "tagline": "翻越安第斯的解放者"
     },
     {
       "id": "che",
       "label": "切",
+      "seal": "切",
       "name": "切·格瓦拉",
       "era": "古巴革命",
       "region": "拉美",
       "group": "美洲",
-      "path": "data/che-journey.json"
+      "path": "data/che-journey.json",
+      "tagline": "摩托日记与革命征途"
     },
     {
       "id": "darwin",
       "label": "小猎犬号",
+      "seal": "达",
       "name": "达尔文",
       "era": "维多利亚时代",
       "region": "环球",
       "group": "欧洲",
-      "path": "data/darwin-journey.json"
+      "path": "data/darwin-journey.json",
+      "tagline": "小猎犬号上的演化之思"
     },
     {
       "id": "victoria",
       "label": "维多利亚",
+      "seal": "维",
       "name": "维多利亚女王",
       "era": "大英帝国",
       "region": "全球",
       "group": "欧洲",
-      "path": "data/victoria-journey.json"
+      "path": "data/victoria-journey.json",
+      "tagline": "日不落帝国的一日"
     }
   ]
 }

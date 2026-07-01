@@ -13,6 +13,9 @@ let poems = {};
 let activeJourney = null;
 let activeIndex = 0;
 let loadingJourneyId = "";
+let touring = false;
+let tourTimer = null;
+const TOUR_DWELL = 4200;
 
 const map = new maplibregl.Map({
   container: "map",
@@ -265,9 +268,11 @@ function addTerrainSources() {
   }, "journey-route");
 }
 
-function makeRoute() {
+function makeRoute(limit) {
   // route:false 的人物（如以作品而非行程为主的文学家）不画连接线
-  const coordinates = activeJourney?.route === false ? [] : points.map((point) => point.lnglat);
+  const all = activeJourney?.route === false ? [] : points.map((point) => point.lnglat);
+  // 自动游历时传入 limit，让路线随节点逐段"画出来"
+  const coordinates = typeof limit === "number" ? all.slice(0, limit) : all;
   return {
     type: "Feature",
     properties: {},
@@ -276,6 +281,11 @@ function makeRoute() {
       coordinates
     }
   };
+}
+
+function updateRouteProgress() {
+  const src = map.getSource("journey-route");
+  if (src) src.setData(makeRoute(touring ? activeIndex + 1 : undefined));
 }
 
 function typeLabel(type) {
@@ -316,7 +326,7 @@ function renderMarkers() {
     el.setAttribute("aria-label", `查看${point.name}`);
     el.dataset.type = point.type;
     el.innerHTML = `<span class="flag" style="background:${typeColor(point.type)}"><span class="seal">${activeJourney.seal}</span><span class="name">${point.short}</span></span><span class="pole" style="background:${typeColor(point.type)}"></span><span class="dot" style="background:${typeColor(point.type)}"></span>`;
-    el.addEventListener("click", () => selectPoint(index, true));
+    el.addEventListener("click", () => { stopTour(); selectPoint(index, true); });
     const marker = new maplibregl.Marker({ element: el, anchor: "bottom" }).setLngLat(point.lnglat).addTo(map);
     markers.push({ point, marker, el });
   });
@@ -342,7 +352,7 @@ function renderTimeline() {
     </li>
   `).join("");
   timeline.querySelectorAll("li").forEach((item) => {
-    item.addEventListener("click", () => selectPoint(Number(item.dataset.index), true));
+    item.addEventListener("click", () => { stopTour(); selectPoint(Number(item.dataset.index), true); });
   });
 }
 
@@ -362,6 +372,7 @@ function selectPoint(index, fly) {
   document.querySelectorAll(".timeline li").forEach((item) => {
     item.classList.toggle("on", Number(item.dataset.index) === activeIndex);
   });
+  updateRouteProgress();
   updateUrl();
   if (fly) {
     map.flyTo({
@@ -386,6 +397,7 @@ function openPoemModal() {
   const point = points[activeIndex];
   const poem = poemForPoint(point);
   if (!poem) return;
+  stopTour();
   const modal = document.getElementById("poemModal");
   const body = document.getElementById("poemBody");
   document.getElementById("poemAuthor").textContent = `${poem.author} · ${point.name}`;
@@ -463,8 +475,53 @@ function closePoemModal() {
 }
 
 function selectAdjacent(direction) {
+  stopTour();
   const next = (activeIndex + direction + points.length) % points.length;
   selectPoint(next, true);
+}
+
+// —— 自动游历：按下播放，相机沿节点逐站飞行、故事自动切换、路线渐进描绘 ——
+function updateTourUI() {
+  const btn = document.getElementById("tourBtn");
+  if (!btn) return;
+  btn.classList.toggle("playing", touring);
+  btn.textContent = touring ? "⏸ 暂停游历" : "▶ 自动游历";
+  btn.setAttribute("aria-pressed", String(touring));
+}
+
+function stopTour() {
+  if (!touring) return;
+  touring = false;
+  clearTimeout(tourTimer);
+  tourTimer = null;
+  updateTourUI();
+  updateRouteProgress();
+}
+
+function scheduleTourStep() {
+  clearTimeout(tourTimer);
+  tourTimer = window.setTimeout(() => {
+    if (!touring) return;
+    if (activeIndex >= points.length - 1) {
+      stopTour();
+      return;
+    }
+    selectPoint(activeIndex + 1, true);
+    scheduleTourStep();
+  }, TOUR_DWELL);
+}
+
+function playTour() {
+  if (touring) {
+    stopTour();
+    return;
+  }
+  if (!points.length) return;
+  touring = true;
+  updateTourUI();
+  if (activeIndex >= points.length - 1) activeIndex = 0;
+  selectPoint(activeIndex, true);
+  scheduleTourStep();
 }
 
 function searchableText(point) {
@@ -501,6 +558,7 @@ function renderSearchResults(query) {
   `).join("");
   panel.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => {
+      stopTour();
       const index = Number(button.dataset.index);
       selectPoint(index, true);
       panel.hidden = true;
@@ -602,8 +660,52 @@ function updatePersonSelect(journeyId) {
   if (!document.getElementById("personPanel").hidden) syncPersonPanel();
 }
 
+// —— 人物画廊：一屏纵览全部人物，点击进入 ——
+function renderGallery() {
+  const grid = document.getElementById("galleryGrid");
+  grid.replaceChildren(...groupedCatalog().map(({ key, people }) => {
+    const sec = document.createElement("section");
+    sec.className = "gallery-group";
+    const h = document.createElement("h3");
+    h.textContent = key;
+    const cards = document.createElement("div");
+    cards.className = "gallery-cards";
+    people.forEach((person) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "gallery-card";
+      card.innerHTML = `
+        <span class="gc-seal">${person.seal || person.name.slice(0, 1)}</span>
+        <span class="gc-text">
+          <b class="gc-name">${person.name}</b>
+          <span class="gc-meta">${person.label} · ${person.era || ""}</span>
+          <span class="gc-tag">${person.tagline || ""}</span>
+        </span>`;
+      card.addEventListener("click", () => {
+        closeGallery();
+        setJourney(person.id);
+      });
+      cards.append(card);
+    });
+    sec.append(h, cards);
+    return sec;
+  }));
+}
+
+function openGallery() {
+  renderGallery();
+  document.getElementById("gallery").hidden = false;
+  document.body.classList.add("modal-open");
+}
+
+function closeGallery() {
+  document.getElementById("gallery").hidden = true;
+  document.body.classList.remove("modal-open");
+}
+
 async function setJourney(journeyId, flyHome = true) {
   if (loadingJourneyId || activeJourney?.id === journeyId) return;
+  stopTour();
   const search = document.querySelector(".search");
   loadingJourneyId = journeyId;
   search.classList.add("loading");
@@ -637,8 +739,11 @@ function applyJourney(nextJourney, flyHome = true) {
 }
 
 function wireControls() {
+  document.getElementById("tourBtn").addEventListener("click", playTour);
   document.getElementById("prevBtn").addEventListener("click", () => selectAdjacent(-1));
   document.getElementById("nextBtn").addEventListener("click", () => selectAdjacent(1));
+  document.getElementById("galleryClose").addEventListener("click", closeGallery);
+  document.querySelector(".brand-mark").addEventListener("click", openGallery);
   document.getElementById("poemOpen").addEventListener("click", openPoemModal);
   document.getElementById("poemClose").addEventListener("click", closePoemModal);
   document.getElementById("poemGlossToggle").addEventListener("click", togglePoemGloss);
@@ -663,6 +768,7 @@ function wireControls() {
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      if (!document.getElementById("gallery").hidden) closeGallery();
       if (!document.getElementById("poemModal").hidden) closePoemModal();
       closePersonPanel();
       return;
@@ -766,6 +872,8 @@ map.on("load", async () => {
     drawMist();
     fitHome(0);
     selectPoint(clampIndex(initial.index), false);
+    // 新访客（无深链接）先见「人物画廊」全景入口，把 26 人的厚度一眼铺开
+    if (!initial.id) openGallery();
     map.once("render", () => window.setTimeout(setLoaderHidden, 180));
 
     // 次级图层：国界、省界、水系、地形阴影——延后懒加载，不阻塞首屏

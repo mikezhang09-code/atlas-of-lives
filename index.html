@@ -36,7 +36,7 @@
     <canvas id="mist"></canvas>
 
     <header class="titlebar">
-      <img class="brand-mark" src="assets/logo.svg" width="44" height="44" alt="山河列传 · Atlas of Lives" decoding="async">
+      <img class="brand-mark" src="assets/logo.svg" width="44" height="44" alt="山河列传 · Atlas of Lives" title="全部人物" decoding="async">
       <p id="titleKicker">真实山河 · 古今人物 · 可漫游叙事地图</p>
       <h1 id="titleHeading">东坡行旅图</h1>
       <p id="titleSubtitle">从眉山到儋州，把苏轼的一生落回山川与江河</p>
@@ -74,6 +74,7 @@
         <i><b id="progressBar"></b></i>
       </div>
       <div class="story-actions">
+        <button id="tourBtn" class="tour-btn" type="button" aria-pressed="false">▶ 自动游历</button>
         <button id="prevBtn" type="button">上一站</button>
         <button id="nextBtn" type="button">下一站</button>
       </div>
@@ -95,6 +96,18 @@
           <div id="poemTrans" class="poem-gloss-trans"></div>
         </div>
       </article>
+    </section>
+
+    <section id="gallery" class="gallery" role="dialog" aria-label="全部人物" hidden>
+      <div class="gallery-inner">
+        <button id="galleryClose" class="gallery-close" type="button" aria-label="进入地图">×</button>
+        <header class="gallery-head">
+          <img src="assets/logo.svg" width="52" height="52" alt="" decoding="async">
+          <h2>山河列传 · Atlas of Lives</h2>
+          <p>把古今中外人物的一生，落回真实山河 —— 择一人，铺开画卷</p>
+        </header>
+        <div id="galleryGrid" class="gallery-grid"></div>
+      </div>
     </section>
 
     <div id="loader" class="loader">

@@ -79,6 +79,13 @@ button {
   display: block;
   margin: 0 auto 2px;
   filter: drop-shadow(0 3px 8px rgba(69, 48, 20, .28));
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform .18s ease;
+}
+
+.brand-mark:hover {
+  transform: scale(1.06);
 }
 
 .titlebar h1 {
@@ -455,6 +462,24 @@ button {
   height: 34px;
   border-radius: 9px;
   font-size: 13px;
+}
+
+.tour-btn {
+  grid-column: 1 / -1;
+  color: #fbf3e0 !important;
+  border-color: rgba(156, 47, 27, .5) !important;
+  background: linear-gradient(180deg, #a8351f, #8f2e1b) !important;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.tour-btn:hover {
+  border-color: var(--zhu) !important;
+}
+
+.tour-btn.playing {
+  background: linear-gradient(180deg, #7d6536, #5f4d29) !important;
+  border-color: rgba(125, 101, 54, .6) !important;
 }
 
 .timeline {
@@ -872,4 +897,166 @@ button {
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* —— 人物画廊（全景入口）—— */
+.gallery[hidden] { display: none; }
+
+.gallery {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  display: grid;
+  place-items: start center;
+  overflow-y: auto;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 250, 235, .5), transparent 60%),
+    rgba(236, 226, 200, .96);
+  backdrop-filter: blur(3px);
+  animation: galleryIn .35s ease both;
+}
+
+@keyframes galleryIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.gallery-inner {
+  position: relative;
+  width: min(1080px, calc(100vw - 40px));
+  padding: 44px 8px 64px;
+}
+
+.gallery-close {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(156, 47, 27, .28);
+  border-radius: 50%;
+  background: rgba(255, 250, 238, .85);
+  color: #7d3a24;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gallery-close:hover {
+  border-color: var(--zhu);
+  background: rgba(156, 47, 27, .08);
+}
+
+.gallery-head {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.gallery-head img {
+  filter: drop-shadow(0 3px 10px rgba(69, 48, 20, .28));
+}
+
+.gallery-head h2 {
+  margin: 8px 0 4px;
+  font: 700 26px/1.2 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 3px;
+  color: var(--ink);
+}
+
+.gallery-head p {
+  margin: 0;
+  font: 400 13px/1.6 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+
+.gallery-group + .gallery-group { margin-top: 22px; }
+
+.gallery-group h3 {
+  margin: 0 0 12px;
+  padding-left: 4px;
+  font: 700 14px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 4px;
+  color: var(--zhu);
+}
+
+.gallery-group h3::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: var(--gold);
+}
+
+.gallery-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.gallery-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  border: 1px solid var(--gold-soft);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(252, 246, 230, .95), rgba(240, 227, 197, .92));
+  box-shadow: 0 4px 14px rgba(69, 48, 20, .12);
+  cursor: pointer;
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 22px rgba(69, 48, 20, .2);
+}
+
+.gc-seal {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #a8351f, #8f2e1b);
+  color: #fbf3e0;
+  font: 700 22px/1 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  box-shadow: inset 0 0 0 1px rgba(255, 244, 220, .35);
+}
+
+.gc-text { display: flex; flex-direction: column; min-width: 0; }
+
+.gc-name {
+  font: 700 17px/1.3 "Kaiti SC", "STKaiti", "KaiTi", serif;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+.gc-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: .5px;
+}
+
+.gc-tag {
+  margin-top: 3px;
+  font-size: 12px;
+  color: #6b5430;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 620px) {
+  .gallery-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .gallery-card { padding: 10px; gap: 9px; }
+  .gc-seal { width: 36px; height: 36px; font-size: 18px; }
+  .gc-name { font-size: 15px; }
+  .gc-tag { display: none; }
 }
