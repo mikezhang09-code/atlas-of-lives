@@ -286,6 +286,28 @@
       "group": "欧洲",
       "path": "data/victoria-journey.json",
       "tagline": "日不落帝国的一日"
+    },
+    {
+      "id": "zhangqian",
+      "label": "张骞",
+      "seal": "骞",
+      "name": "张骞",
+      "era": "西汉",
+      "region": "西域与河西",
+      "group": "中国",
+      "path": "data/zhangqian-journey.json",
+      "tagline": "凿空西域，丝路先驱"
+    },
+    {
+      "id": "marcopolo",
+      "label": "马可·波罗",
+      "seal": "马",
+      "name": "马可·波罗",
+      "era": "元代 / 威尼斯",
+      "region": "欧亚与海丝",
+      "group": "欧洲",
+      "path": "data/marcopolo-journey.json",
+      "tagline": "单骑越欧亚，云帆归东方"
     }
   ]
 }
